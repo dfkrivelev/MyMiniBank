@@ -1,4 +1,7 @@
 package com.minibank.repositories;
 
-public interface TransactionRepository {
+import com.minibank.models.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 }
