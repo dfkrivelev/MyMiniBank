@@ -4,6 +4,5 @@ out
 target
 *.iml
 *.xml
-*.yaml
 *.class
 *.jar

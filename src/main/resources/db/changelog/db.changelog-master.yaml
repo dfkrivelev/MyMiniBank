@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - property:
+      name: type.text
+      value: text
+  - include:
+      file: db/changelog/changeset/db.table-users.yaml
+  - include:
+      file: db/changelog/changeset/db.table-account.yaml
+  - include:
+      file: db/changelog/changeset/db.table-transaction.yaml

@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-transactions
+      author: Dzmitry
+      changes:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constrains:
+              primaryKey: true
+              primaryKeyName: transaction_id
+        - column:
+            name: account_to
+            type: int
+            constrains:
+              primaryKey: true
+        - column:
+            name: account_from
+            type: int
+            constrains:
+              primaryKey: true
+        - column:
+            name: date_time
+            type: timestamp
+            constrains:
+              nullable: false
+        - column:
+            name: amount
+            type: number(12,2)
+            constrains:
+              nullable: false

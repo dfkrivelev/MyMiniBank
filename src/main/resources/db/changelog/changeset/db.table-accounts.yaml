@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-accounts
+      author: Dzmitry
+      changes:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constrains:
+              primaryKey: true
+              primaryKeyName: account_id
+        - column:
+            name: account_number
+            type: int
+            constrains:
+              primaryKey: true
+        - column:
+            name: balance
+            type: number(12,2)
+            constrains:
+              nullable: false
+        - column:
+            name: date_creation
+            type: timestamp
+            constrains:
+              nullable: false
