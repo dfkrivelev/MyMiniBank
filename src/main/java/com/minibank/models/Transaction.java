@@ -1,5 +1,7 @@
 package com.minibank.models;
 
+import com.minibank.models.constants.StatusTransaction;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
@@ -10,23 +12,34 @@ public class Transaction {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Account.class)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
     @Column(name = "account_to")
-    private Account accountTo;
-    @Column(name = "account_from")
-    private Account accountFrom;
+    private Integer accountTo;
     @Column(name = "date_creation")
     private OffsetDateTime dateTime;
     @Column(name = "amount")
     private Double amount;
+    @Column(name = "status_transaction")
+    @Enumerated(EnumType.STRING)
+    private StatusTransaction status;
+    @Column(name = "description")
+    private String description;
 
     public Transaction() {
     }
 
-    public Transaction(Account accountTo, Account accountFrom, OffsetDateTime dateTime, Double amount) {
+    public Transaction(User user ,Integer accountTo, Double amount, String description) {
+        this.user = user;
         this.accountTo = accountTo;
-        this.accountFrom = accountFrom;
-        this.dateTime = dateTime;
+        this.dateTime = OffsetDateTime.now();
         this.amount = amount;
+        this.status = StatusTransaction.COMPLETED;
+        this.description=description;
     }
 
     public int getId() {
@@ -37,20 +50,20 @@ public class Transaction {
         this.id = id;
     }
 
-    public Account getAccountTo() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getAccountTo() {
         return accountTo;
     }
 
-    public void setAccountTo(Account accountTo) {
+    public void setAccountTo(Integer accountTo) {
         this.accountTo = accountTo;
-    }
-
-    public Account getAccountFrom() {
-        return accountFrom;
-    }
-
-    public void setAccountFrom(Account accountFrom) {
-        this.accountFrom = accountFrom;
     }
 
     public OffsetDateTime getDateTime() {
@@ -69,14 +82,33 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public StatusTransaction getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusTransaction status) {
+        this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
+                ", user=" + user +
+                ", account=" + account +
                 ", accountTo=" + accountTo +
-                ", accountFrom=" + accountFrom +
                 ", dateTime=" + dateTime +
                 ", amount=" + amount +
+                ", status=" + status +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

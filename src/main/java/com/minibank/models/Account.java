@@ -1,7 +1,10 @@
 package com.minibank.models;
 
+import com.minibank.models.constants.Status;
+
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "accounts")
@@ -12,18 +15,26 @@ public class Account {
     private int id;
     @Column(name = "account_number")
     private int accountNumber;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @Column(name = "balance")
     private Double balance;
     @Column(name = "data_creation")
-    private LocalDate dateOfCreationAccount;
+    private OffsetDateTime dateTime;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Account() {
     }
 
-    public Account(int accountNumber, Double balance, LocalDate dateOfCreationAccount) {
+    public Account(int accountNumber, User user, Double balance) {
         this.accountNumber = accountNumber;
+        this.user = user;
         this.balance = balance;
-        this.dateOfCreationAccount = dateOfCreationAccount;
+        this.dateTime = OffsetDateTime.now();
+        this.status = Status.ACTIVE;
     }
 
     public int getId() {
@@ -42,6 +53,14 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Double getBalance() {
         return balance;
     }
@@ -50,12 +69,20 @@ public class Account {
         this.balance = balance;
     }
 
-    public LocalDate getDateOfCreationAccount() {
-        return dateOfCreationAccount;
+    public OffsetDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDateOfCreationAccount(LocalDate dateOfCreationAccount) {
-        this.dateOfCreationAccount = dateOfCreationAccount;
+    public void setDateTime(OffsetDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -63,8 +90,10 @@ public class Account {
         return "Account{" +
                 "id=" + id +
                 ", accountNumber=" + accountNumber +
+                ", user=" + user +
                 ", balance=" + balance +
-                ", dateOfCreationAccount=" + dateOfCreationAccount +
+                ", dateTime=" + dateTime +
+                ", status=" + status +
                 '}';
     }
 }

@@ -3,8 +3,8 @@ databaseChangeLog:
       name: type.text
       value: text
   - include:
-      file: db/changelog/changeset/db.table-users.yaml
+      file: db/changelog/changeset/db.t1.xml
   - include:
-      file: db/changelog/changeset/db.table-account.yaml
+      file: db/changelog/changeset/db.t2.xml
   - include:
-      file: db/changelog/changeset/db.table-transaction.yaml
+      file: db/changelog/changeset/db.t3.xml

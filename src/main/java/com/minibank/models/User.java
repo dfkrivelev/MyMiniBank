@@ -1,7 +1,12 @@
 package com.minibank.models;
 
+import com.minibank.models.constants.Country;
+import com.minibank.models.constants.Status;
+import com.minibank.models.constants.UserRole;
+
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +26,7 @@ public class User {
     @Column(name = "phone_number")
     private int phoneNumber;
     @Column(name = "date_creation")
-    private LocalDate dateOfCreationUser;
+    private OffsetDateTime dateTime;
     @Column(name = "email")
     private String email;
     @Column(name = "password")
@@ -29,20 +34,26 @@ public class User {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Account> accounts;
 
     public User() {
     }
 
     public User(String firstName, String lastName, Country country, int phoneNumber,
-                String email, String password, UserRole role) {
+                String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
         this.phoneNumber = phoneNumber;
-        this.dateOfCreationUser = LocalDate.now();
+        this.dateTime = OffsetDateTime.now();
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.role = UserRole.NEW;
+        this.status = Status.BLOCK;
     }
 
     public int getId() {
@@ -85,12 +96,12 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDate getDateOfCreationUser() {
-        return dateOfCreationUser;
+    public OffsetDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDateOfCreationUser(LocalDate dateOfCreationUser) {
-        this.dateOfCreationUser = dateOfCreationUser;
+    public void setDateTime(OffsetDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getEmail() {
@@ -117,6 +128,22 @@ public class User {
         this.role = role;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -125,10 +152,12 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", country=" + country +
                 ", phoneNumber=" + phoneNumber +
-                ", dateOfCreationUser=" + dateOfCreationUser +
+                ", dateTime=" + dateTime +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", status=" + status +
+                ", accounts=" + accounts +
                 '}';
     }
 }

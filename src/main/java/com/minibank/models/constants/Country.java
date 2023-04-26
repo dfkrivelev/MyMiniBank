@@ -1,4 +1,4 @@
-package com.minibank.models;
+package com.minibank.models.constants;
 
 public enum Country {
     AUSTRIA,
