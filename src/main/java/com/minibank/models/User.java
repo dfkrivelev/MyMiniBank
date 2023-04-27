@@ -6,6 +6,7 @@ import com.minibank.models.constants.UserRole;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,7 +39,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     public User() {
     }

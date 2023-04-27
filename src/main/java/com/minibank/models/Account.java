@@ -26,6 +26,9 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
+
     public Account() {
     }
 
@@ -83,6 +86,14 @@ public class Account {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     @Override
