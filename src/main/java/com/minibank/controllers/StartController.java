@@ -16,8 +16,17 @@ public class StartController {
 
     @GetMapping("/about")
     public String aboutPage(Model model) {
-        return "about";
+        return "main/about";
     }
 
+    @GetMapping("/technology")
+    public String technologyPage(Model model) {
+        return "main/technology";
+    }
+
+    @GetMapping("/contact")
+    public String contactPage(Model model) {
+        return "main/contact";
+    }
 
 }

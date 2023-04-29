@@ -1,0 +1,24 @@
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="navbar(page)">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">My<i class="fa fa-diamond"></i>Bank</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="#">Sign in</a></li>
+                <li><a href="#">Create account</a> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:classappend="${page == 'home'} ? 'active'"><a th:href="@{/}">Home</a></li>
+                <li th:classappend="${page == 'about'} ? 'active'"><a th:href="@{/about}">About project</a> </li>
+                <li th:classappend="${page == 'technology'} ? 'active'"><a th:href="@{/technology}">Technology</a> </li>
+                <li th:classappend="${page == 'contact'} ? 'active'"><a th:href="@{/contact}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

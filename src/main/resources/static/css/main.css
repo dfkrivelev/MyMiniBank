@@ -54,7 +54,7 @@ hr {
  padding-bottom: 15px;
 }
 
-.navbar-inverse {
+    .navbar-inverse {
  background: #202020;
  border-color: #2d2d2d;
 }
@@ -71,7 +71,7 @@ hr {
 }
 
 #headerback {
- background: url(../../static/img/header.jpg) no-repeat center top;
+ background: url(../img/header.jpg) no-repeat center top;
  margin-top: -10px;
  padding-top: 10px;
  text-align: center;
