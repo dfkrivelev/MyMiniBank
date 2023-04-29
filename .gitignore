@@ -3,6 +3,5 @@ out
 .idea
 target
 *.iml
-*.xml
 *.class
 *.jar

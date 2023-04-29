@@ -1,0 +1,56 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="#1" author="Dzmitry">
+        <createTable tableName="users">
+            <column name="user_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="user_id"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="country" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone_number" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_creation" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false" />
+            </column>
+            <column name="role" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet author="Dzmitry" id="unique_user_id">
+        <addUniqueConstraint columnNames="user_id"
+                             constraintName="unique_user_id"
+                             tableName="users"/>
+    </changeSet>
+
+    <changeSet id="create_admin" author="Dzmitry">
+        <sql dbms="postgresql">INSERT INTO users (first_name, last_name, country, phone_number, email, password,
+            role, status)
+        VALUES('admin', 'admin', 'POLAND', '111111', 'admin', 'admin', 'ADMIN', 'ACTIVE')
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

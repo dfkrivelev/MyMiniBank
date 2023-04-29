@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 @Table(name = "transactions")
 public class Transaction {
     @Id
-    @Column(name = "id")
+    @Column(name = "transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne

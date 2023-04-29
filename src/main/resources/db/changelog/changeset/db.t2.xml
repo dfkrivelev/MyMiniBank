@@ -1,0 +1,45 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="#2" author="Dzmitry">
+        <createTable tableName="accounts">
+            <column name="account_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="account_id"/>
+            </column>
+            <column name="account_number" type="int">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="user_id" type="int">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="balance" type="number(12,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_creation" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="accounts"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_account_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="user_id" />
+
+    </changeSet>
+
+    <changeSet author="Dzmitry" id="unique_account_id">
+        <addUniqueConstraint columnNames="account_id"
+                             constraintName="unique_account_id"
+                             tableName="accounts"/>
+    </changeSet>
+
+
+
+</databaseChangeLog>

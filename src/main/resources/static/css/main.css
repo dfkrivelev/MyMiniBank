@@ -121,3 +121,22 @@ hr {
  font-size: 30px;
  padding: 20px;
 }
+
+.dropdown-menu {
+ background-color: #383838;
+ width: 500px;
+}
+
+#lp {
+ color: white;
+ padding-top: 6px;
+}
+
+#ll {
+ color: white;
+ padding-top: 6px;
+}
+
+#entry {
+ margin: 10px 10px -2px 10px;
+}

@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "accounts")
 public class Account {
     @Id
-    @Column(name = "id")
+    @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "account_number")

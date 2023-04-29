@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="#3" author="Dzmitry">
+        <createTable tableName="transactions">
+            <column name="transaction_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="transaction_id"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="account_id" type="int">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="account_to" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_creation" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="amount" type="number(12,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(30)" />
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="transactions"
+                                 baseColumnNames="account_id"
+                                 constraintName="fk_trans_account_id"
+                                 referencedTableName="accounts"
+                                 referencedColumnNames="account_id" />
+
+        <addForeignKeyConstraint baseTableName="transactions"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_transaction_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="user_id" />
+
+    </changeSet>
+
+</databaseChangeLog>
