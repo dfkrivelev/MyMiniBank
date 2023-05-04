@@ -4,12 +4,15 @@ import com.minibank.models.Account;
 import com.minibank.models.User;
 import com.minibank.models.constants.Status;
 import com.minibank.models.constants.UserRole;
+import com.minibank.repositories.AccountRepository;
 import com.minibank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,6 +31,7 @@ public class UserService {
 
     @Transactional
     public User create(User user) {
+        user.setPassword(user.getPassword());
         return userRepository.save(user);
     }
 
@@ -52,5 +56,8 @@ public class UserService {
 
     public List<Account> findAllAccounts(User user) {
         return user.getAccounts();
+    }
+    public Optional<User> findByEmail (String email) {
+        return userRepository.findByEmail(email);
     }
 }
