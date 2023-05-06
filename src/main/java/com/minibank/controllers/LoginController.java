@@ -5,6 +5,7 @@ import com.minibank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,12 +27,12 @@ public class LoginController {
     }
 
     @GetMapping("/registration")
-    public String registration () {
+    public String registrationPage (@ModelAttribute("user") User user) {
         return "auth/registration";
     }
 
     @PostMapping("/registration")
-    public String registration(User user) {
+    public String registration(@ModelAttribute("user") User user) {
         User newUser = userService.create(user);
        return "redirect:auth/login";
     }

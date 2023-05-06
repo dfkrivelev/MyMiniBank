@@ -50,11 +50,8 @@ public class User {
         this.lastName = lastName;
         this.country = country;
         this.phoneNumber = phoneNumber;
-        this.dateTime = OffsetDateTime.now();
         this.email = email;
         this.password = password;
-        this.role = UserRole.NEW;
-        this.status = Status.BLOCK;
     }
 
     public int getId() {
