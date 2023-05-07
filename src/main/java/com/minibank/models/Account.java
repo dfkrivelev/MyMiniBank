@@ -32,12 +32,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(int accountNumber, User user, Double balance) {
+    public Account(int accountNumber, User user) {
         this.accountNumber = accountNumber;
         this.user = user;
-        this.balance = balance;
-        this.dateTime = OffsetDateTime.now();
-        this.status = Status.ACTIVE;
     }
 
     public int getId() {

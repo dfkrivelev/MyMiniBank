@@ -37,7 +37,7 @@ public class UserService {
     }
 
     @Transactional
-    public User create(User user) {
+    public User registration(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setStatus(Status.ACTIVE);
         user.setRole(UserRole.NEW);
