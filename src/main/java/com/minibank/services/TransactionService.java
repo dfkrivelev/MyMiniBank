@@ -7,14 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
 public class TransactionService {
 
+    private final TransactionRepository transactionRepository;
+    private final AccountService accountService;
+
     @Autowired
-    TransactionRepository transactionRepository;
+    public TransactionService(TransactionRepository transactionRepository, AccountService accountService) {
+        this.transactionRepository = transactionRepository;
+        this.accountService = accountService;
+    }
 
     public List<Transaction> findAll() {
         return transactionRepository.findAll();
@@ -25,7 +32,11 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction create(Transaction transaction) {
+    public Transaction create(Transaction transaction, int fromAccountId, int toAccountNumber) {
+        transaction.setAccountFrom(accountService.findById(fromAccountId));
+        transaction.setAccountTo(accountService.findByAccountNumber(toAccountNumber));
+        transaction.setStatus(StatusTransaction.COMPLETED);
+        transaction.setDateTime(OffsetDateTime.now());
         return transactionRepository.save(transaction);
     }
 

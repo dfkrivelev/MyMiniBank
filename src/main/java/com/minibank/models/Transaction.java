@@ -12,14 +12,12 @@ public class Transaction {
     @Column(name = "transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Account.class)
     @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
-    @Column(name = "account_to")
-    private Integer accountTo;
+    private Account accountFrom;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Account.class)
+    @JoinColumn(name = "account_number", nullable = false)
+    private Account accountTo;
     @Column(name = "date_creation")
     private OffsetDateTime dateTime;
     @Column(name = "amount")
@@ -33,12 +31,8 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(User user ,Integer accountTo, Double amount, String description) {
-        this.user = user;
-        this.accountTo = accountTo;
-        this.dateTime = OffsetDateTime.now();
+    public Transaction(Double amount, String description) {
         this.amount = amount;
-        this.status = StatusTransaction.COMPLETED;
         this.description=description;
     }
 
@@ -50,19 +44,19 @@ public class Transaction {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Account getAccountFrom() {
+        return accountFrom;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAccountFrom(Account accountFrom) {
+        this.accountFrom = accountFrom;
     }
 
-    public Integer getAccountTo() {
+    public Account getAccountTo() {
         return accountTo;
     }
 
-    public void setAccountTo(Integer accountTo) {
+    public void setAccountTo(Account accountTo) {
         this.accountTo = accountTo;
     }
 
@@ -102,8 +96,7 @@ public class Transaction {
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", user=" + user +
-                ", account=" + account +
+                ", account=" + accountFrom +
                 ", accountTo=" + accountTo +
                 ", dateTime=" + dateTime +
                 ", amount=" + amount +

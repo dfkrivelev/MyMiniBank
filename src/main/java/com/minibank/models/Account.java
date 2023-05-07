@@ -4,6 +4,7 @@ import com.minibank.models.constants.Status;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,8 +27,11 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
+    @OneToMany(mappedBy = "accountFrom", cascade = CascadeType.ALL)
+    private List<Transaction> transactionsFrom = new ArrayList<>();
+
+    @OneToMany(mappedBy = "accountTo", cascade = CascadeType.ALL)
+    private List<Transaction> transactionsTo = new ArrayList<>();
 
     public Account() {
     }
@@ -85,12 +89,20 @@ public class Account {
         this.status = status;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
+    public List<Transaction> getTransactionsFrom() {
+        return transactionsFrom;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setTransactionsFrom(List<Transaction> transactions) {
+        this.transactionsFrom = transactions;
+    }
+
+    public List<Transaction> getTransactionsTo() {
+        return transactionsTo;
+    }
+
+    public void setTransactionsTo(List<Transaction> transactionsTo) {
+        this.transactionsTo = transactionsTo;
     }
 
     @Override

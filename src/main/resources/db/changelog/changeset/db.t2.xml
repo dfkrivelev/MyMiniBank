@@ -30,13 +30,20 @@
                                  baseColumnNames="user_id"
                                  constraintName="fk_account_user_id"
                                  referencedTableName="users"
-                                 referencedColumnNames="user_id" />
+                                 referencedColumnNames="user_id"
+                                 onUpdate="CASCADE"/>
 
     </changeSet>
 
     <changeSet author="Dzmitry" id="unique_account_id">
         <addUniqueConstraint columnNames="account_id"
                              constraintName="unique_account_id"
+                             tableName="accounts"/>
+    </changeSet>
+
+    <changeSet author="Dzmitry" id="unique_account_number">
+        <addUniqueConstraint columnNames="account_number"
+                             constraintName="unique_account_number"
                              tableName="accounts"/>
     </changeSet>
 

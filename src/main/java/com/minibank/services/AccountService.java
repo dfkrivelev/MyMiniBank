@@ -20,7 +20,6 @@ public class AccountService {
     private final UserService userService;
 
     @Autowired
-
     public AccountService(AccountRepository accountRepository, UserService userService) {
         this.accountRepository = accountRepository;
         this.userService = userService;
@@ -34,12 +33,17 @@ public class AccountService {
         return accountRepository.findById(accountId).get();
     }
 
+    public Account findByAccountNumber(int accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber).get();
+    }
+
     @Transactional
     public Account create(Account account, int id) {
         account.setUser(userService.findById(id));
         account.setBalance(0.0);
         account.setDateTime(OffsetDateTime.now());
         account.setStatus(Status.ACTIVE);
+        userService.addUserAccounts(userService.findById(id), account);
        return accountRepository.save(account);
     }
 
@@ -49,9 +53,10 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    public void addTransaction(Account account, Transaction transaction){
-        List<Transaction> transactions = account.getTransactions();
-        transactions.add(transaction);
-        account.setTransactions(transactions);
+    @Transactional
+    public void addTransaction(Transaction transaction, Account account){
+//        List<Transaction> transactions = account.getTransactions();
+//        transactions.add(transaction);
+//        account.setTransactions(transactions);
     }
 }
