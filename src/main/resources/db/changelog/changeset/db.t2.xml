@@ -6,14 +6,14 @@
 
     <changeSet id="#2" author="Dzmitry">
         <createTable tableName="accounts">
-            <column name="account_id" type="int" autoIncrement="true">
+            <column name="account_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="account_id"/>
             </column>
-            <column name="account_number" type="int">
-                <constraints primaryKey="true" />
+            <column name="account_number" type="bigint">
+                <constraints nullable="false" />
             </column>
-            <column name="user_id" type="int">
-                <constraints primaryKey="true" />
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" />
             </column>
             <column name="balance" type="number(12,2)">
                 <constraints nullable="false" />

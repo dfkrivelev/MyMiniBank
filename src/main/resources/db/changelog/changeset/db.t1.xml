@@ -6,7 +6,7 @@
 
     <changeSet id="#1" author="Dzmitry">
         <createTable tableName="users">
-            <column name="user_id" type="int" autoIncrement="true">
+            <column name="user_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="user_id"/>
             </column>
             <column name="first_name" type="varchar(50)">
@@ -18,7 +18,7 @@
             <column name="country" type="varchar(12)">
                 <constraints nullable="false" />
             </column>
-            <column name="phone_number" type="int">
+            <column name="phone_number" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="email" type="varchar(50)">

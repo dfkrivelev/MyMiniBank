@@ -1,5 +1,6 @@
 package com.minibank.services;
 
+import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.constants.StatusTransaction;
 import com.minibank.repositories.TransactionRepository;
@@ -27,24 +28,29 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Transaction findById (int id) {
+    public Transaction findById (Long id) {
         return transactionRepository.findById(id).get();
     }
 
     @Transactional
-    public Transaction create(Transaction transaction, int fromAccountId, int toAccountNumber) {
+    public Transaction create(Transaction transaction, Long fromAccountId, Long toAccountNumber) {
+        //TODO Сделать так, что мы вводим номер счетом, но связываение будет по id
+
         transaction.setAccountFrom(accountService.findById(fromAccountId));
         transaction.setAccountTo(accountService.findByAccountNumber(toAccountNumber));
-        transaction.setStatus(StatusTransaction.COMPLETED);
         transaction.setDateTime(OffsetDateTime.now());
+        transaction.setStatus(StatusTransaction.COMPLETED);
+
         return transactionRepository.save(transaction);
     }
 
     @Transactional
-    private Transaction reverseTransaction(Transaction transaction) {
-        //TODO Написать логику создания обратной транзакции для счета на который переводят деньги
-        Transaction newTransaction = transaction;
-        return transactionRepository.save(newTransaction);
+    private Transaction reverseTransaction(Transaction transaction, int fromAccountId, int toAccountNumber) {
+        Transaction reverseTransaction = transaction;
+
+
+
+        return transactionRepository.save(reverseTransaction);
     }
 
     @Transactional

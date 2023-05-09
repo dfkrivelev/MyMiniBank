@@ -6,13 +6,13 @@
 
     <changeSet id="#3" author="Dzmitry">
         <createTable tableName="transactions">
-            <column name="transaction_id" type="int" autoIncrement="true">
+            <column name="transaction_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="transaction_id"/>
             </column>
-            <column name="account_id" type="int">
-                <constraints primaryKey="true" />
+            <column name="account_id" type="bigint">
+                <constraints nullable="false" />
             </column>
-            <column name="account_number" type="int">
+            <column name="account_number" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="date_creation" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">

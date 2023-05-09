@@ -4,6 +4,7 @@ import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.constants.Status;
 import com.minibank.repositories.AccountRepository;
+import com.minibank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,33 +19,37 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, UserService userService) {
+    public AccountService(AccountRepository accountRepository, UserService userService, UserRepository userRepository) {
         this.accountRepository = accountRepository;
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     public List<Account> findAll() {
         return accountRepository.findAll();
     }
 
-    public Account findById(int accountId) {
+    public Account findById(Long accountId) {
         return accountRepository.findById(accountId).get();
     }
 
-    public Account findByAccountNumber(int accountNumber) {
+    public Account findByAccountNumber(Long accountNumber) {
         return accountRepository.findByAccountNumber(accountNumber).get();
     }
 
     @Transactional
-    public Account create(Account account, int id) {
-        account.setUser(userService.findById(id));
-        account.setBalance(0.0);
-        account.setDateTime(OffsetDateTime.now());
-        account.setStatus(Status.ACTIVE);
-        userService.addUserAccounts(userService.findById(id), account);
-       return accountRepository.save(account);
+    public void create(Account account, Long id) {
+        Account newAccount = new Account(account.getAccountNumber(), userRepository.getReferenceById(id),
+               account.getBalance());
+
+        newAccount.setBalance(0.0);
+        newAccount.setDateTime(OffsetDateTime.now());
+        newAccount.setStatus(Status.ACTIVE);
+        userService.addUserAccounts(userRepository.getReferenceById(id), newAccount);
+        accountRepository.save(newAccount);
     }
 
     @Transactional
@@ -58,5 +63,11 @@ public class AccountService {
 //        List<Transaction> transactions = account.getTransactions();
 //        transactions.add(transaction);
 //        account.setTransactions(transactions);
+    }
+
+    @Transactional
+    public Account changeBalance(Account account ,double amount) {
+        account.setBalance(amount);
+        return accountRepository.save(account);
     }
 }

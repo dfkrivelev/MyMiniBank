@@ -20,8 +20,8 @@ public class AccountController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute("account") Account account,
-                         @RequestParam("userId") int userId) {
-        Account newAccount = accountService.create(account, userId);
+                         @RequestParam("userId") Long userId) {
+        accountService.create(account, userId);
         return "redirect:/account/ok";
     }
 

@@ -11,7 +11,7 @@ public class Transaction {
     @Id
     @Column(name = "transaction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Account.class)
     @JoinColumn(name = "account_id", nullable = false)
     private Account accountFrom;
@@ -31,16 +31,18 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Double amount, String description) {
+    public Transaction(Account accountFrom, Account accountTo, Double amount, String description) {
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
         this.amount = amount;
-        this.description=description;
+        this.description = description;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

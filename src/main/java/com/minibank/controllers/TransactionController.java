@@ -13,16 +13,16 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @GetMapping("/transaction")
+    @GetMapping("/transfer")
     public String transactionPage(@ModelAttribute("transaction")Transaction transaction){
-        return "trans/transaction";
+        return "trans/transfer";
     }
 
-    @PostMapping("/transaction")
+    @PostMapping("/transfer")
     public String transaction(@ModelAttribute("transaction") Transaction transaction,
-                              @RequestParam("accountFromId") int accountFromId,
-                              @RequestParam("accountNumberTo") int accountNumberTo){
-
+                              @RequestParam("accountFromId") Long accountFromId,
+                              @RequestParam("accountNumberTo") Long accountNumberTo){
+        Transaction newTransaction = transactionService.create(transaction, accountFromId, accountNumberTo);
         return "redirect:/account/ok";
     }
 }

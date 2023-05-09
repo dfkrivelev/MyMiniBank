@@ -3,6 +3,7 @@ package com.minibank.models;
 import com.minibank.models.constants.Status;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,9 @@ public class Account {
     @Id
     @Column(name = "account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(name = "account_number")
-    private int accountNumber;
+    private Long accountNumber;
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -36,24 +37,25 @@ public class Account {
     public Account() {
     }
 
-    public Account(int accountNumber, User user) {
+    public Account(Long accountNumber, User user, Double balance) {
         this.accountNumber = accountNumber;
         this.user = user;
+        this.balance = balance;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getAccountNumber() {
+    public Long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
 

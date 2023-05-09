@@ -32,17 +32,20 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findById (int userId) {
+    public User findById (Long userId) {
         return userRepository.findById(userId).get();
     }
 
     @Transactional
     public User registration(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setStatus(Status.ACTIVE);
-        user.setRole(UserRole.NEW);
-        user.setDateTime(OffsetDateTime.now());
-        return userRepository.save(user);
+        User newUser = new User(user.getFirstName(), user.getLastName(), user.getCountry(),
+                user.getPhoneNumber(), user.getEmail(), user.getPassword());
+
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setStatus(Status.ACTIVE);
+        newUser.setRole(UserRole.NEW);
+        newUser.setDateTime(OffsetDateTime.now());
+        return userRepository.save(newUser);
     }
 
     @Transactional

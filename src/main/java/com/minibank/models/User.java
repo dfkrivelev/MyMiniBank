@@ -16,7 +16,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -25,7 +25,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Country country;
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private Long phoneNumber;
     @Column(name = "date_creation")
     private OffsetDateTime dateTime;
     @Column(name = "email")
@@ -44,7 +44,7 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, Country country, int phoneNumber,
+    public User(String firstName, String lastName, Country country, Long phoneNumber,
                 String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,11 +54,11 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -86,11 +86,11 @@ public class User {
         this.country = country;
     }
 
-    public int getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
