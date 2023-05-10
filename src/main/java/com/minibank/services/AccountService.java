@@ -3,6 +3,7 @@ package com.minibank.services;
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.constants.Status;
+import com.minibank.models.constants.TypeTransfer;
 import com.minibank.repositories.AccountRepository;
 import com.minibank.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +42,11 @@ public class AccountService {
     }
 
     @Transactional
-    public void create(Account account, Long id) {
-        Account newAccount = new Account(account.getAccountNumber(), userRepository.getReferenceById(id),
-               account.getBalance());
+    public Account create(Account account, Long id) {
+        Account newAccount = new Account(account.getAccountNumber(), userRepository.getReferenceById(id));
 
-        newAccount.setBalance(0.0);
-        newAccount.setDateTime(OffsetDateTime.now());
-        newAccount.setStatus(Status.ACTIVE);
         userService.addUserAccounts(userRepository.getReferenceById(id), newAccount);
-        accountRepository.save(newAccount);
+        return accountRepository.save(newAccount);
     }
 
     @Transactional
@@ -58,11 +55,18 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    @Transactional
-    public void addTransaction(Transaction transaction, Account account){
-//        List<Transaction> transactions = account.getTransactions();
-//        transactions.add(transaction);
-//        account.setTransactions(transactions);
+
+    public void addTransaction(Account account, Transaction transaction){
+        List<Transaction> transactions;
+        if(transaction.getTypeTransfer().equals(TypeTransfer.EXPENSE)) {
+            transactions = account.getTransactionsFrom();
+            transactions.add(transaction);
+            account.setTransactionsFrom(transactions);
+        }else if(transaction.getTypeTransfer().equals(TypeTransfer.INCOME)) {
+            transactions = account.getTransactionsTo();
+            transactions.add(transaction);
+            account.setTransactionsTo(transactions);
+        }
     }
 
     @Transactional

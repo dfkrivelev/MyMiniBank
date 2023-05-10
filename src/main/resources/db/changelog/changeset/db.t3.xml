@@ -24,6 +24,9 @@
             <column name="status_transaction" type="varchar(20)">
                 <constraints nullable="false" />
             </column>
+            <column name="type_transfer" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
             <column name="description" type="varchar(30)" />
         </createTable>
     </changeSet>

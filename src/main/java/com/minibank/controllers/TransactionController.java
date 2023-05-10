@@ -21,8 +21,8 @@ public class TransactionController {
     @PostMapping("/transfer")
     public String transaction(@ModelAttribute("transaction") Transaction transaction,
                               @RequestParam("accountFromId") Long accountFromId,
-                              @RequestParam("accountNumberTo") Long accountNumberTo){
-        Transaction newTransaction = transactionService.create(transaction, accountFromId, accountNumberTo);
+                              @RequestParam("accountToId") Long accountToId){
+        Transaction newTransaction = transactionService.transfer(transaction, accountFromId, accountToId);
         return "redirect:/account/ok";
     }
 }

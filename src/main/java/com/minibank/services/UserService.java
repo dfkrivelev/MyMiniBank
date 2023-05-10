@@ -42,9 +42,6 @@ public class UserService {
                 user.getPhoneNumber(), user.getEmail(), user.getPassword());
 
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        newUser.setStatus(Status.ACTIVE);
-        newUser.setRole(UserRole.NEW);
-        newUser.setDateTime(OffsetDateTime.now());
         return userRepository.save(newUser);
     }
 

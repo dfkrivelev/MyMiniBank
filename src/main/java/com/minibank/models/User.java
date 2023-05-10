@@ -52,6 +52,9 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.status = Status.ACTIVE;
+        this.role = UserRole.NEW;
+        this.dateTime = OffsetDateTime.now();
     }
 
     public Long getId() {

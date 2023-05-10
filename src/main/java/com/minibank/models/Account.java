@@ -37,10 +37,12 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long accountNumber, User user, Double balance) {
+    public Account(Long accountNumber, User user) {
         this.accountNumber = accountNumber;
         this.user = user;
-        this.balance = balance;
+        this.balance = 0.0;
+        this.dateTime = OffsetDateTime.now();
+        this.status = Status.ACTIVE;
     }
 
     public Long getId() {

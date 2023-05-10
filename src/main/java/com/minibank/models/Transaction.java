@@ -1,6 +1,7 @@
 package com.minibank.models;
 
 import com.minibank.models.constants.StatusTransaction;
+import com.minibank.models.constants.TypeTransfer;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -25,6 +26,9 @@ public class Transaction {
     @Column(name = "status_transaction")
     @Enumerated(EnumType.STRING)
     private StatusTransaction status;
+    @Column(name = "type_transfer")
+    @Enumerated(EnumType.STRING)
+    private TypeTransfer typeTransfer;
     @Column(name = "description")
     private String description;
 
@@ -86,6 +90,14 @@ public class Transaction {
         this.status = status;
     }
 
+    public TypeTransfer getTypeTransfer() {
+        return typeTransfer;
+    }
+
+    public void setTypeTransfer(TypeTransfer typeTransfer) {
+        this.typeTransfer = typeTransfer;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -98,11 +110,12 @@ public class Transaction {
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", account=" + accountFrom +
+                ", accountFrom=" + accountFrom +
                 ", accountTo=" + accountTo +
                 ", dateTime=" + dateTime +
                 ", amount=" + amount +
                 ", status=" + status +
+                ", typeTransfer=" + typeTransfer +
                 ", description='" + description + '\'' +
                 '}';
     }

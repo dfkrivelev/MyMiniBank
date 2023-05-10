@@ -3,6 +3,8 @@ package com.minibank.services;
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.constants.StatusTransaction;
+import com.minibank.models.constants.TypeTransfer;
+import com.minibank.repositories.AccountRepository;
 import com.minibank.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,13 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final AccountService accountService;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository, AccountService accountService) {
+    public TransactionService(TransactionRepository transactionRepository, AccountService accountService, AccountRepository accountRepository) {
         this.transactionRepository = transactionRepository;
         this.accountService = accountService;
+        this.accountRepository = accountRepository;
     }
 
     public List<Transaction> findAll() {
@@ -33,21 +37,28 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction create(Transaction transaction, Long fromAccountNumber, Long toAccountNumber) {
-        
+    public Transaction transfer(Transaction transaction, Long fromAccountNumber, Long toAccountNumber) {
+        Transaction newTransaction = transaction;
+        Account fromAccount = accountService.findByAccountNumber(fromAccountNumber);
+        Account toAccount = accountService.findByAccountNumber(toAccountNumber);
 
-        transaction.setAccountFrom(accountService.findByAccountNumber(fromAccountNumber));
-        transaction.setAccountTo(accountService.findByAccountNumber(toAccountNumber));
-        transaction.setDateTime(OffsetDateTime.now());
-        transaction.setStatus(StatusTransaction.COMPLETED);
+        newTransaction.setAccountFrom(fromAccount);
+        newTransaction.setAccountTo(toAccount);
+        newTransaction.setDateTime(OffsetDateTime.now());
+        newTransaction.setAmount(newTransaction.getAmount() * -1);
+        newTransaction.setStatus(StatusTransaction.COMPLETED);
+        newTransaction.setTypeTransfer(TypeTransfer.EXPENSE);
 
+        if(fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()){
+            fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
+        }
 
-
+        accountRepository.save(fromAccount);
         return transactionRepository.save(transaction);
     }
 
     @Transactional
-    private Transaction reverseTransaction(Transaction transaction, int fromAccountId, int toAccountNumber) {
+    private Transaction reverseTransaction(Transaction transaction, Account toAccount) {
         Transaction reverseTransaction = transaction;
 
 
