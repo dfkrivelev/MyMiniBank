@@ -13,10 +13,10 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Account.class)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "account_from_id", nullable = false)
     private Account accountFrom;
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Account.class)
-    @JoinColumn(name = "account_number", nullable = false)
+    @JoinColumn(name = "account_to_id", nullable = false)
     private Account accountTo;
     @Column(name = "date_creation")
     private OffsetDateTime dateTime;

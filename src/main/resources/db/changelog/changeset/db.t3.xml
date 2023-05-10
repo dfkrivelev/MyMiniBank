@@ -9,10 +9,10 @@
             <column name="transaction_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="transaction_id"/>
             </column>
-            <column name="account_id" type="bigint">
+            <column name="account_from_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="account_number" type="bigint">
+            <column name="account_to_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="date_creation" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
@@ -29,21 +29,21 @@
     </changeSet>
 
 
-<changeSet id="fk_trans_account_id" author="Dzmitry">
+<changeSet id="fk_trans_account_from_id" author="Dzmitry">
     <addForeignKeyConstraint baseTableName="transactions"
-                               baseColumnNames="account_id"
-                               constraintName="fk_trans_account_id"
+                               baseColumnNames="account_from_id"
+                               constraintName="fk_trans_account_from_id"
                                referencedTableName="accounts"
                                referencedColumnNames="account_id"
                                onUpdate="CASCADE"/>
 </changeSet>
 
-<changeSet id="fk_trans_account_number" author="Dzmitry">
+<changeSet id="fk_trans_account_to_number" author="Dzmitry">
     <addForeignKeyConstraint baseTableName="transactions"
-                              baseColumnNames="account_number"
+                              baseColumnNames="account_to_id"
                               constraintName="fk_trans_account_to_number"
                               referencedTableName="accounts"
-                              referencedColumnNames="account_number"
+                              referencedColumnNames="account_id"
                               onUpdate="CASCADE"/>
 </changeSet>
 

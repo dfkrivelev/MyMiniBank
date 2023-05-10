@@ -33,13 +33,15 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction create(Transaction transaction, Long fromAccountId, Long toAccountNumber) {
-        //TODO Сделать так, что мы вводим номер счетом, но связываение будет по id
+    public Transaction create(Transaction transaction, Long fromAccountNumber, Long toAccountNumber) {
+        
 
-        transaction.setAccountFrom(accountService.findById(fromAccountId));
+        transaction.setAccountFrom(accountService.findByAccountNumber(fromAccountNumber));
         transaction.setAccountTo(accountService.findByAccountNumber(toAccountNumber));
         transaction.setDateTime(OffsetDateTime.now());
         transaction.setStatus(StatusTransaction.COMPLETED);
+
+
 
         return transactionRepository.save(transaction);
     }
