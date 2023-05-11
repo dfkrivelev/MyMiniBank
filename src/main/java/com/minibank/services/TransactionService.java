@@ -52,18 +52,30 @@ public class TransactionService {
         if(fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()){
             fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
         }
-
         accountRepository.save(fromAccount);
-        return transactionRepository.save(transaction);
+
+        Transaction reverseTransaction = reverseTransaction(newTransaction, toAccount);
+
+        transactionRepository.save(newTransaction);
+        return transactionRepository.save(reverseTransaction);
     }
 
     @Transactional
     private Transaction reverseTransaction(Transaction transaction, Account toAccount) {
-        Transaction reverseTransaction = transaction;
+        Transaction reverseTransaction = new Transaction(transaction.getAccountFrom(), transaction.getAccountTo(),
+                transaction.getAmount(), transaction.getDescription());
 
+        reverseTransaction.setDateTime(OffsetDateTime.now());
+        reverseTransaction.setAmount(reverseTransaction.getAmount() * -1);
+        reverseTransaction.setStatus(StatusTransaction.COMPLETED);
+        reverseTransaction.setTypeTransfer(TypeTransfer.INCOME);
 
+        toAccount.setBalance(toAccount.getBalance() + reverseTransaction.getAmount());
 
-        return transactionRepository.save(reverseTransaction);
+        accountService.addTransaction(toAccount, reverseTransaction);
+
+        accountRepository.save(toAccount);
+        return reverseTransaction;
     }
 
     @Transactional

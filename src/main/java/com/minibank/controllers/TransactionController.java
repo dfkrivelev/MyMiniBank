@@ -22,7 +22,7 @@ public class TransactionController {
     public String transaction(@ModelAttribute("transaction") Transaction transaction,
                               @RequestParam("accountFromId") Long accountFromId,
                               @RequestParam("accountToId") Long accountToId){
-        Transaction newTransaction = transactionService.transfer(transaction, accountFromId, accountToId);
+        transactionService.transfer(transaction, accountFromId, accountToId);
         return "redirect:/account/ok";
     }
 }
