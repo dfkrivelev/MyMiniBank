@@ -1,5 +1,6 @@
 package com.minibank.controllers;
 
+import com.minibank.models.User;
 import com.minibank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,21 +21,33 @@ public class StartController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
+        User user = userService.getAuthUser();
+
+        model.addAttribute("user", user);
         return "main/index";
     }
 
     @GetMapping("/about")
     public String aboutPage(Model model) {
+        User user = userService.getAuthUser();
+
+        model.addAttribute("user", user);
         return "main/about";
     }
 
     @GetMapping("/technology")
     public String technologyPage(Model model) {
+        User user = userService.getAuthUser();
+
+        model.addAttribute("user", user);
         return "main/technology";
     }
 
     @GetMapping("/contact")
     public String contactPage(Model model) {
+        User user = userService.getAuthUser();
+
+        model.addAttribute("user", user);
         return "main/contact";
     }
 
