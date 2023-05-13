@@ -10,8 +10,12 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li th:classappend="${page == 'login'} ? 'active'"><a th:href="@{/auth/login}">Sign in</a></li>
-                <li th:classappend="${page == 'registration'} ? 'active'"><a th:href="@{/auth/registration}">Sign up</a></li>
+                <li th:classappend="${page == 'login'} ? 'active'">
+                    <a th:href="@{/auth/login}">Sign in</a>
+                </li>
+                <li th:classappend="${page == 'registration'} ? 'active'">
+                    <a th:href="@{/auth/registration}">Sign up</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li th:classappend="${page == 'home'} ? 'active'"><a th:href="@{/}">Home</a></li>
