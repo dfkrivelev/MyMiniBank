@@ -18,6 +18,12 @@
 </head>
 <body>
 <div th:replace="fragments/navbar :: navbar('userPage')"></div>
+<div class="container">
+    <h1>Success</h1>
+    <form action="/auth/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+</div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
