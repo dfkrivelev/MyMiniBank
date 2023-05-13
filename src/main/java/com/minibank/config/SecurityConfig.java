@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/", "/about", "/technology", "/contact", "/auth/login",
                             "/auth/registration", "/auth/success", "/account/create", "/account/ok",
-                            "/trans/transfer","/user/homePage").permitAll()
+                            "/trans/transfer").permitAll()
+                    .antMatchers("/user/home").hasAnyRole(UserRole.ADMIN.name(), UserRole.CLIENT.name(), UserRole.NEW.name())
                     .antMatchers("/css/**", "/img/**", "/fonts/**", "/js/**").permitAll()
                     .anyRequest().hasAnyRole(UserRole.ADMIN.name(), UserRole.CLIENT.name(), UserRole.NEW.name())
                 .and()
@@ -44,12 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/auth/login")
                     .loginProcessingUrl("/log")
                     .permitAll()
-                    .defaultSuccessUrl("/user/homePage")
+                    .defaultSuccessUrl("/auth/success")
                     .permitAll()
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-                    .logoutSuccessUrl("/")
+                    .logoutSuccessUrl("/auth/login")
                     .permitAll();
     }
 

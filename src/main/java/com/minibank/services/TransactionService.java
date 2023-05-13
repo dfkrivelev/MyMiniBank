@@ -32,7 +32,7 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Transaction findById(Long id) {
+    public Transaction findById (Long id) {
         return transactionRepository.findById(id).get();
     }
 
@@ -49,7 +49,7 @@ public class TransactionService {
         newTransaction.setStatus(StatusTransaction.COMPLETED);
         newTransaction.setTypeTransfer(TypeTransfer.EXPENSE);
 
-        if (fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()) {
+        if(fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()){
             fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
         }
         accountRepository.save(fromAccount);

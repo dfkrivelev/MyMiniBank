@@ -10,18 +10,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li th:unless="${user}" th:classappend="${page == 'login'} ? 'active'">
-                    <a th:href="@{/auth/login}">Sign in</a>
-                </li>
-                <li th:unless="${user}" th:classappend="${page == 'registration'} ? 'active'">
-                    <a th:href="@{/auth/registration}">Sign up</a>
-                </li>
-                <li th:if="${user}" th:classappend="${page == 'homePage'} ? 'active'">
-                    <a th:href="@{/homePage}" th:inline="text">[[${user.firstName}]]</a>
-                </li>
-                <li th:if="${user}" th:action="@{/auth/logout}" th:method="post">
-                    <a th:href="@{/}" th:inline="text">Logout</a>
-                </li>
+                <li th:classappend="${page == 'login'} ? 'active'"><a th:href="@{/auth/login}">Sign in</a></li>
+                <li th:classappend="${page == 'registration'} ? 'active'"><a th:href="@{/auth/registration}">Sign up</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li th:classappend="${page == 'home'} ? 'active'"><a th:href="@{/}">Home</a></li>
