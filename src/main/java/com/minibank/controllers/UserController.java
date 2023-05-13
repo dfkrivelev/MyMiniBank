@@ -1,7 +1,6 @@
 package com.minibank.controllers;
 
 
-import com.minibank.models.User;
 import com.minibank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +17,6 @@ public class UserController {
 
     @GetMapping("/home")
     public String homePage(Model model) {
-        User user = userService.getAuthUser();
-
-        model.addAttribute("user", user);
         return "user/home";
     }
 

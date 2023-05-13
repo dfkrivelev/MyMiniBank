@@ -10,14 +10,11 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li th:unless="${user}" th:classappend="${page == 'login'} ? 'active'">
+                <li th:classappend="${page == 'login'} ? 'active'">
                     <a th:href="@{/auth/login}">Sign in</a>
                 </li>
-                <li th:unless="${user}" th:classappend="${page == 'registration'} ? 'active'">
+                <li th:classappend="${page == 'registration'} ? 'active'">
                     <a th:href="@{/auth/registration}">Sign up</a>
-                </li>
-                <li th:if="${user}" th:classappend="${page == 'userPage'} ? 'active'">
-                    <a th:href="@{/user/home}">[[${user.firstName}]]</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -7,31 +7,35 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class SecurityUser implements UserDetails {
-    private final User user;
+
+    private final String username;
+    private final String password;
+    private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
-    public SecurityUser(User user, boolean isActive) {
-        this.user = user;
+    public SecurityUser(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
         this.isActive = isActive;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(this.user.getRole().name()));
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return this.user.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return this.user.getEmail();
+        return username;
     }
 
     @Override
@@ -63,9 +67,5 @@ public class SecurityUser implements UserDetails {
                 user.getStatus().equals(Status.ACTIVE),
                 user.getRole().getAuthorities()
         );
-    }
-
-    public User getUser() {
-        return this.user;
     }
 }
