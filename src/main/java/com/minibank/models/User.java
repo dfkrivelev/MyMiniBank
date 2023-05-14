@@ -53,7 +53,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.status = Status.ACTIVE;
-        this.role = UserRole.CLIENT;
+        this.role = UserRole.NEW;
         this.dateTime = OffsetDateTime.now();
     }
 
