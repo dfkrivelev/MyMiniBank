@@ -6,7 +6,11 @@ import com.minibank.models.constants.Status;
 import com.minibank.models.constants.UserRole;
 import com.minibank.repositories.AccountRepository;
 import com.minibank.repositories.UserRepository;
+import com.minibank.security.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +66,17 @@ public class UserService {
     public void changeStatus(User user, Status status) {
         user.setStatus(status);
         userRepository.save(user);
+    }
+
+    public User getAuthUser() {
+        User user = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(!(auth instanceof AnonymousAuthenticationToken)){
+            SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
+            user = securityUser.getUser();
+        }
+
+        return user;
     }
 
     public List<Account> findAllAccounts(User user) {
