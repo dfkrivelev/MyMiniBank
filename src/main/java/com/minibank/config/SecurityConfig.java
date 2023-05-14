@@ -1,6 +1,7 @@
 package com.minibank.config;
 
 
+import com.minibank.models.constants.Permission;
 import com.minibank.models.constants.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/", "/about", "/technology", "/contact", "/auth/login",
                             "/auth/registration", "/auth/success", "/account/create", "/account/ok",
                             "/trans/transfer", "/user/home").permitAll()
+                    .antMatchers("/admin/main").hasAuthority("ADMIN")
                     .antMatchers("/css/**", "/img/**", "/fonts/**", "/js/**").permitAll()
                     .anyRequest().hasAnyRole(UserRole.ADMIN.name(), UserRole.CLIENT.name())
                 .and()
@@ -49,6 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .deleteCookies("JSESSIONID")
                     .logoutSuccessUrl("/auth/login")
                     .permitAll();
     }
@@ -56,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -64,10 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    protected DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        return daoAuthenticationProvider;
-    }
+//    protected DaoAuthenticationProvider daoAuthenticationProvider() {
+//        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+//        return daoAuthenticationProvider;
+//    }
 }
