@@ -25,4 +25,13 @@ public class AdminController {
         return "admin/main";
     }
 
+    @GetMapping("/userList")
+    public String userListPage(Model model) {
+        User user = userService.getAuthUser();
+
+        model.addAttribute("users", userService.findAll());
+        model.addAttribute("user", user);
+        return "admin/userList";
+    }
+
 }

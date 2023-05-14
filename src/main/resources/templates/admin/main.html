@@ -18,7 +18,18 @@
 </head>
 <body>
 <div th:replace="fragments/navbar :: navbar('admin')"></div>
-Admin
+
+<br><br><br><br><br><br>
+<div class="container">
+    <div class="row justify-content-center text-center mb-5 pb-3">
+        <h1>Hello Admin!</h1>
+    </div>
+    <div class="row justify-content-center text-center mb-5 pb-3">
+        <a th:href="@{/admin/userList}">Users List</a>
+    </div>
+</div>
+
+
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

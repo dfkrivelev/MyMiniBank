@@ -47,8 +47,6 @@ public class AccountController {
         User user = userService.getAuthUser();
         List<Account> myAcc = user.getAccounts();
 
-        System.out.println(myAcc.get(0).getBalance());
-
         model.addAttribute("user", user);
         model.addAttribute("myAcc", myAcc);
         return "account/myAccounts";
