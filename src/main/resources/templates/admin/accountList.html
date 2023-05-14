@@ -26,29 +26,21 @@
     <thead>
     <tr class="active">
       <th>Id</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Country</th>
-      <th>Phone number</th>
+      <th>Account Number</th>
+      <th>Account Owner</th>
+      <th>Balance</th>
       <th>Create date</th>
-      <th>Email</th>
       <th>Status</th>
-      <th>Accounts</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${users}">
-      <td th:text="${user.id}">...</td>
-      <td th:text="${user.firstName}">...</td>
-      <td th:text="${user.lastName}">...</td>
-      <td th:text="${user.country}">...</td>
-      <td th:text="${user.phoneNumber}">...</td>
-      <td th:text="${user.dateTime}">...</td>
-      <td th:text="${user.email}">...</td>
-      <td th:text="${user.Status}">...</td>
-      <td th:each="acc,iterStat : ${user.getAccounts()}">
-        <span th:text="${!iterStat.last ? acc.accountNumber + ', ' : acc.accountNumber}"></span>
-      </td>
+    <tr th:each="account : ${accounts}">
+      <td th:text="${account.id}">...</td>
+      <td th:text="${account.accountNumber}">...</td>
+      <td th:text="${account.user.id}">...</td>
+      <td th:text="${account.balance}">...</td>
+      <td th:text="${account.dateTime}">...</td>
+      <td th:text="${account.Status}">...</td>
     </tr>
     </tbody>
   </table>
@@ -57,5 +49,6 @@
 <br><br><br>
 
 <div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>
