@@ -22,9 +22,9 @@
 <div th:each="account : ${myAcc}">
     <p th:text="${account.accountNumber}">Account Number</p>
     <p th:text="${account.balance}">Balance</p>
-</div>
-<div>
-    <button class="btn"><a th:href="@{/trans/transfer}">Transaction</a></button>
+    <div>
+        <button class="btn"><a th:href="@{/trans/transfer/{id}(id=${account.id})}">Transaction</a></button>
+    </div>
 </div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

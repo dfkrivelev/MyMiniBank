@@ -18,6 +18,7 @@ public class AccountController {
     private final AccountService accountService;
     private final UserService userService;
 
+
     @Autowired
     public AccountController(AccountService accountService, UserService userService) {
         this.accountService = accountService;
@@ -45,6 +46,8 @@ public class AccountController {
     public String myAccountsPage(Model model) {
         User user = userService.getAuthUser();
         List<Account> myAcc = user.getAccounts();
+
+        System.out.println(myAcc.get(0).getBalance());
 
         model.addAttribute("user", user);
         model.addAttribute("myAcc", myAcc);

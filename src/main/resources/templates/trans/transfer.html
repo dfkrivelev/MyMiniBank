@@ -19,7 +19,7 @@
 <body>
 <div th:replace="fragments/nbForUser :: navbar('transfer')"></div>
 
-<form th:method="post" th:action="@{/trans/transfer}" th:object="${transaction}">
+<form th:method="post" th:action="@{/trans/transfer/{id}(id=${account.id})}" th:object="${transaction}">
     <div class="container">
         <div class="row">
             <div class="col-md-offset-3 col-md-6">
@@ -33,12 +33,12 @@
                     <div role="tabpanel" class="tab-pane fade in active" id="cr">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label for="accountFromId">Account From</label>
-                                <input type="number" class="form-control" id="accountFromId" name="accountFromId">
+                                <label>Account From</label>
+                                <input type="number" class="form-control" th:value="${account.accountNumber}" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="accountToId">Account To</label>
-                                <input type="number" class="form-control" id="accountToId" name="accountToId">
+                                <label for="accountNumberTo">Account To</label>
+                                <input type="number" class="form-control" id="accountNumberTo" name="accountNumberTo">
                             </div>
                             <div class="form-group">
                                 <label for="amount">Amount</label>
