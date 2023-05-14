@@ -17,17 +17,15 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar('userPage')"></div>
-
-
-
-
-<div class="container">
-    <form action="/auth/logout" method="POST">
-        <button type="submit">Logout</button>
-    </form>
+<div th:replace="fragments/nbForUser :: navbar('myAccounts')"></div>
+<br><br>
+<div th:each="account : ${myAcc}">
+    <p th:text="${account.accountNumber}">Account Number</p>
+    <p th:text="${account.balance}">Balance</p>
 </div>
-
+<div>
+    <button class="btn"><a th:href="@{/trans/transfer}">Transaction</a></button>
+</div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

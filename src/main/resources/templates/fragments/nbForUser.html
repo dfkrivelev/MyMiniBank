@@ -1,0 +1,21 @@
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="navbar(page)">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:href="@{/}">My<i class="fa fa-diamond"></i>Bank</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li th:if="${user}" th:classappend="${page == 'userPage'} ? 'active'">
+                    <a th:href="@{/user/home}">[[${user.firstName}]]</a>
+                </li>
+                <li th:classappend="${page == 'myAccount'} ? 'active'"><a th:href="@{/account/myAccounts}">My Accounts</a> </li>
+                <li th:classappend="${page == 'transfer'} ? 'active'"><a th:href="@{/trans/transfer}">Transaction</a> </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -17,6 +17,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
+<div th:replace="fragments/nbForUser :: navbar('transfer')"></div>
 
 <form th:method="post" th:action="@{/trans/transfer}" th:object="${transaction}">
     <div class="container">
@@ -56,5 +57,7 @@
     </div><!-- /.container -->
 </form>
 
+
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

@@ -38,7 +38,7 @@ public class User {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Account> accounts = new ArrayList<>();
 
     public User() {

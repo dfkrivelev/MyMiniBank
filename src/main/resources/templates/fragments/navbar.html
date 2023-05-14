@@ -24,6 +24,7 @@
                 <li th:classappend="${page == 'home'} ? 'active'"><a th:href="@{/}">Home</a></li>
                 <li th:classappend="${page == 'about'} ? 'active'"><a th:href="@{/about}">About project</a> </li>
                 <li th:classappend="${page == 'technology'} ? 'active'"><a th:href="@{/technology}">Technology</a> </li>
+                <li th:if="${user}" th:classappend="${page == 'myAccounts'} ? 'active'"><a th:href="@{/account/myAccounts}">My Accounts</a> </li>
                 <li th:if="${user}" th:classappend="${page == 'admin'} ? 'active'"><a th:href="@{/admin/main}">Admin</a> </li>
                 <li th:classappend="${page == 'contact'} ? 'active'"><a th:href="@{/contact}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
             </ul>

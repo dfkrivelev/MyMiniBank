@@ -32,6 +32,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public List<User> findAll() {
         return userRepository.findAll();
     }
