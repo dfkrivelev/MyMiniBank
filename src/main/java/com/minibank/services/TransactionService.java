@@ -37,7 +37,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction transfer(Transaction transaction, Long fromAccountNumber, Long toAccountNumber) {
+    public void transfer(Transaction transaction, Long fromAccountNumber, Long toAccountNumber) {
         Transaction newTransaction = transaction;
         Account fromAccount = accountService.findByAccountNumber(fromAccountNumber);
         Account toAccount = accountService.findByAccountNumber(toAccountNumber);
@@ -52,18 +52,16 @@ public class TransactionService {
         if(fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()){
             fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
         }
+        accountService.addTransaction(fromAccount, newTransaction);
         accountRepository.save(fromAccount);
 
-
-        Transaction reverseTransaction = reverseTransaction(newTransaction, toAccount);
-
-        transactionRepository.save(newTransaction);
-        return transactionRepository.save(reverseTransaction);
+        reverseTransaction(newTransaction, toAccount);
+//        transactionRepository.save(newTransaction);
     }
 
     @Transactional
-    private Transaction reverseTransaction(Transaction transaction, Account toAccount) {
-        Transaction reverseTransaction = new Transaction(transaction.getAccountFrom(), transaction.getAccountTo(),
+    public void reverseTransaction(Transaction transaction, Account toAccount) {
+        Transaction reverseTransaction = new Transaction(transaction.getAccountFrom(), toAccount,
                 transaction.getAmount(), transaction.getDescription());
 
         reverseTransaction.setDateTime(OffsetDateTime.now());
@@ -76,7 +74,6 @@ public class TransactionService {
         accountService.addTransaction(toAccount, reverseTransaction);
 
         accountRepository.save(toAccount);
-        return reverseTransaction;
     }
 
     @Transactional

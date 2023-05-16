@@ -57,4 +57,13 @@ public class AdminController {
         model.addAttribute("user", user);
         return "admin/accountList";
     }
+
+    @GetMapping("/transactionsList")
+    public String transactionsListPage(Model model) {
+        User user = userService.getAuthUser();
+
+        model.addAttribute("transactions", transactionService.findAll());
+        model.addAttribute("user", user);
+        return "admin/transactionsList";
+    }
 }
