@@ -60,7 +60,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public void reverseTransaction(Transaction transaction, Account toAccount) {
+    private void reverseTransaction(Transaction transaction, Account toAccount) {
         Transaction reverseTransaction = new Transaction(transaction.getAccountFrom(), toAccount,
                 transaction.getAmount(), transaction.getDescription());
 
