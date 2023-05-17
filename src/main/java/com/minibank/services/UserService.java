@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,8 +94,13 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public User setPassword(User user, String newPassword) {
-        user.setPassword(passwordEncoder.encode(newPassword));
+    @Transactional
+    public User setPassword(User user, String oldPassword, String newPassword) {
+        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+        } else {
+            throw new IllegalArgumentException("incorrect password");
+        }
         return userRepository.save(user);
     }
 
