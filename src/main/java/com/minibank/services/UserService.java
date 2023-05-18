@@ -141,11 +141,11 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public List<Account> getActiveAccount(User user){
+    public List<Account> getMyAccount(User user){
         List<Account> activeAccount = new ArrayList<>();
 
         for(Account account : user.getAccounts()) {
-            if(!account.getStatus().equals(Status.BLOCK)) {
+            if(!account.getStatus().equals(Status.DELETE)) {
                 activeAccount.add(account);
             }
         }

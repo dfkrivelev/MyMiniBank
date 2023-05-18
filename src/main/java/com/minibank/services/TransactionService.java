@@ -52,7 +52,7 @@ public class TransactionService {
         if(fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()){
             fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
         }
-        accountService.addTransaction(fromAccount, newTransaction);
+        accountService.addExpenseTransaction(fromAccount, newTransaction);
         accountRepository.save(fromAccount);
 
         reverseTransaction(newTransaction, toAccount);
@@ -71,7 +71,7 @@ public class TransactionService {
 
         toAccount.setBalance(toAccount.getBalance() + reverseTransaction.getAmount());
 
-        accountService.addTransaction(toAccount, reverseTransaction);
+        accountService.addIncomeTransaction(toAccount, reverseTransaction);
 
         accountRepository.save(toAccount);
     }

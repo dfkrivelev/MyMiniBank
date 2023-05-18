@@ -2,6 +2,7 @@ package com.minibank.controllers;
 
 import com.minibank.models.Account;
 import com.minibank.models.User;
+import com.minibank.models.constants.Status;
 import com.minibank.services.AccountService;
 import com.minibank.services.TransactionService;
 import com.minibank.services.UserService;
@@ -10,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;

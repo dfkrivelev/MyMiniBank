@@ -22,8 +22,12 @@
 <div th:each="account : ${myAcc}">
     <p th:text="${account.accountNumber}">Account Number</p>
     <p th:text="${account.balance}">Balance</p>
+    <p th:text="${account.status}">Status</p>
     <div>
         <button class="btn"><a th:href="@{/trans/transfer/{id}(id=${account.id})}">Transaction</a></button>
+    </div>
+    <div>
+        <a th:href="@{/trans/myTransfers/{id}(id=${account.id})}">History Transactions</a>
     </div>
 </div>
 <div th:replace="fragments/footer :: footer"></div>

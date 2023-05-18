@@ -53,4 +53,16 @@ public class TransactionController {
         listAccount.replaceAll(s -> s.equals(account) ? s : accountService.findById(id));
         return "redirect:/account/myAccounts";
     }
+
+    @GetMapping("/myTransfers/{id}")
+    public String myTransfersPage(@PathVariable("id") Long id,
+                                  Model model){
+        User user = userService.getAuthUser();
+        Account account = accountService.findById(id);
+
+        model.addAttribute("user", user);
+        model.addAttribute("account", account);
+        model.addAttribute("myTransfers", accountService.allTransactions(account));
+        return "trans/myTransfers";
+    }
 }

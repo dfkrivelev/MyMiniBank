@@ -3,6 +3,7 @@ package com.minibank.services;
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.User;
+import com.minibank.models.comparator.ComparatorDate;
 import com.minibank.models.constants.Status;
 import com.minibank.models.constants.TypeTransfer;
 import com.minibank.repositories.AccountRepository;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,22 +60,59 @@ public class AccountService {
     }
 
 
-    public void addTransaction(Account account, Transaction transaction){
+    public void addExpenseTransaction(Account account, Transaction transaction){
         List<Transaction> transactions;
-        if(transaction.getTypeTransfer().equals(TypeTransfer.EXPENSE)) {
             transactions = account.getTransactionsFrom();
             transactions.add(transaction);
             account.setTransactionsFrom(transactions);
-        }else if(transaction.getTypeTransfer().equals(TypeTransfer.INCOME)) {
+    }
+
+    public void addIncomeTransaction(Account account, Transaction transaction){
+        List<Transaction> transactions;
             transactions = account.getTransactionsTo();
             transactions.add(transaction);
             account.setTransactionsTo(transactions);
-        }
     }
 
     @Transactional
     public Account changeBalance(Account account ,double amount) {
         account.setBalance(amount);
         return accountRepository.save(account);
+    }
+
+    public List<Transaction> allTransactions (Account account) {
+        List <Transaction> allTransactions = new ArrayList<>();
+
+        System.out.println("Размер списка от " + account.getTransactionsFrom().size());
+        System.out.println("Размер списка к " + account.getTransactionsTo().size());
+
+        allTransactions.addAll(expenseTransactions(account));
+        allTransactions.addAll(incomeTransactions(account));
+
+        allTransactions.sort(new ComparatorDate());
+
+        return allTransactions;
+    }
+
+    public List<Transaction> expenseTransactions (Account account) {
+        List<Transaction> expenseTransactions = new ArrayList<>();
+
+        for(Transaction transaction : account.getTransactionsFrom()) {
+            if(transaction.getTypeTransfer().equals(TypeTransfer.EXPENSE)){
+                expenseTransactions.add(transaction);
+            }
+        }
+        return expenseTransactions;
+    }
+
+    public List<Transaction> incomeTransactions (Account account) {
+        List<Transaction> incomeTransactions = new ArrayList<>();
+
+        for(Transaction transaction : account.getTransactionsTo()) {
+            if(transaction.getTypeTransfer().equals(TypeTransfer.INCOME)){
+                incomeTransactions.add(transaction);
+            }
+        }
+        return incomeTransactions;
     }
 }

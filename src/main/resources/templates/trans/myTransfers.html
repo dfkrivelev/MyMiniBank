@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin</title>
+    <title>Home</title>
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
-<div th:replace="fragments/nbForAdmin :: navbar('admin')"></div>
+<div th:replace="fragments/nbForUser :: navbar('myAccounts')"></div>
 
 <br><br><br>
 
@@ -25,7 +25,6 @@
     <table class="table table-bordered table-hover table-striped">
         <thead>
         <tr class="active">
-            <th>Id</th>
             <th>Account From</th>
             <th>Account To</th>
             <th>Amount</th>
@@ -36,8 +35,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="transaction : ${transactions}">
-            <td th:text="${transaction.id}">...</td>
+        <tr th:each="transaction : ${myTransfers}">
             <td th:text="${transaction.accountFrom.id}">...</td>
             <td th:text="${transaction.accountTo.id}">...</td>
             <td th:text="${transaction.amount}">...</td>
@@ -53,6 +51,5 @@
 <br><br><br>
 
 <div th:replace="fragments/footer :: footer"></div>
-
 </body>
 </html>
