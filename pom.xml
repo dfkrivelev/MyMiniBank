@@ -93,6 +93,34 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>5.0.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring</generatorName>
+							<inputSpec>${project.basedir}/src/main/resources/openapi/rest-api.yaml</inputSpec>
+							<apiPackage>com.minibank.controllersRest</apiPackage>
+							<modelPackage>com.minibank.modelsVO</modelPackage>
+							<supportingFilesToGenerate>RestApi.java</supportingFilesToGenerate>
+							<generateSupportingFiles>true</generateSupportingFiles>
+							<generateApiTests>false</generateApiTests>
+							<configOptions>
+								<interfaceOnly>true</interfaceOnly>
+								<useTags>true</useTags>
+								<java8>false</java8>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

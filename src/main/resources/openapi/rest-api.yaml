@@ -1,0 +1,211 @@
+openapi: 3.0.0
+info:
+  title: My Mini-Bank project
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/
+    description: Dev server
+tags:
+  - name: Login
+    description: Login operations
+  - name: User
+    description: User operations
+  - name: Admin
+    description: Admin operations
+paths:
+  /admin/usersList:
+    get:
+      summary: Method that displays a list of all users
+      tags:
+        - Admin
+      operationId: getAllUsers
+      parameters:
+        - name: page
+          in: query
+          description: Number page
+          required: false
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          description: Number of elements
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+      responses:
+        '200':
+          description: Successfully getting all users
+          content:
+            applications/json:
+              schema:
+                type: array
+                items:
+                  type: UserVO
+        '404':
+          description: Request failed - No items
+  /admin/accountsList:
+    get:
+      summary: Method that displays a list of all accounts
+      tags:
+        - Admin
+      operationId: getAllAccounts
+      responses:
+        '200':
+          description: Successfully getting all accounts
+          content:
+            applications/json:
+              schema:
+                type: array
+                items:
+                  type: AccountVO
+        '404':
+          description: Request failed - No items
+  /admin/transactionsList:
+    get:
+      summary: Method that displays a list of all transactions
+      tags:
+        - Admin
+      operationId: getAllTransactions
+      responses:
+        '200':
+          description: Successfully getting all transactions
+          content:
+            applications/json:
+              schema:
+                type: array
+                items:
+                  type: TransactionVO
+        '404':
+          description: Request failed - No items
+  /admin/{user_id}:
+    get:
+      summary: Method that returns a user by id
+      tags:
+        - Admin
+      operationId: getUserById
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User Id
+          schema:
+            type: integer
+            format: int64
+          example: 1
+      responses:
+        '200':
+          description: Successfully getting user
+          content:
+            applications/json:
+              schema:
+                type: UserVO
+        '404':
+          description: Request failed - No items
+  /admin/{account_id}:
+    get:
+      summary: Method that returns a account by id
+      tags:
+        - Admin
+      operationId: getAccountById
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: Account Id
+          schema:
+            type: integer
+            format: int64
+          example: 1
+      responses:
+        '200':
+          description: Successfully getting account
+          content:
+            applications/json:
+              schema:
+                type: AccountVO
+        '404':
+          description: Request failed - No items
+    patch:
+      summary: Update account status
+      tags:
+        - Admin
+      operationId: updateStatusAcc
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: Account Id
+          schema:
+            type: integer
+            format: int64
+          example: 1
+      requestBody:
+        description: update status
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - ACTIVE
+                    - BLOCK
+                    - DELETE
+      responses:
+        '200':
+          description: Successfully updated account
+          content:
+            applications/json:
+              schema:
+                type: AccountVO
+        '400':
+          description: Bad request
+  /admin/{transaction_id}:
+    get:
+      summary: Method that returns a transaction by id
+      tags:
+        - Admin
+      operationId: getTransactionById
+      parameters:
+        - name: transaction_id
+          in: path
+          required: true
+          description: transaction Id
+          schema:
+            type: integer
+            format: int64
+          example: 1
+      responses:
+        '200':
+          description: Successfully getting transaction
+          content:
+            applications/json:
+              schema:
+                type: TransactionVO
+        '404':
+          description: Not found
+  /admin/createAccount:
+    post:
+      summary: Create new Account
+      tags:
+        - Admin
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: AccountVO
+      responses:
+        '200':
+          description: Successfully created account
+          content:
+            applications/json:
+              schema:
+                type: AccountVO
+        '400':
+          description: Bad request

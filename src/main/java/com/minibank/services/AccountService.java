@@ -83,9 +83,6 @@ public class AccountService {
     public List<Transaction> allTransactions (Account account) {
         List <Transaction> allTransactions = new ArrayList<>();
 
-        System.out.println("Размер списка от " + account.getTransactionsFrom().size());
-        System.out.println("Размер списка к " + account.getTransactionsTo().size());
-
         allTransactions.addAll(expenseTransactions(account));
         allTransactions.addAll(incomeTransactions(account));
 
