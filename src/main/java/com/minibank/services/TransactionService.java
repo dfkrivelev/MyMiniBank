@@ -6,6 +6,8 @@ import com.minibank.models.constants.StatusTransaction;
 import com.minibank.models.constants.TypeTransfer;
 import com.minibank.repositories.AccountRepository;
 import com.minibank.repositories.TransactionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 public class TransactionService {
+
+    private final static Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
     private final TransactionRepository transactionRepository;
     private final AccountService accountService;
@@ -32,7 +36,7 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Transaction findById (Long id) {
+    public Transaction findById(Long id) {
         return transactionRepository.findById(id).get();
     }
 
@@ -49,11 +53,12 @@ public class TransactionService {
         newTransaction.setStatus(StatusTransaction.COMPLETED);
         newTransaction.setTypeTransfer(TypeTransfer.EXPENSE);
 
-        if(fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()){
+        if (fromAccount.getBalance() != 0 && fromAccount.getBalance() >= newTransaction.getAmount()) {
             fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
         }
         accountService.addExpenseTransaction(fromAccount, newTransaction);
         accountRepository.save(fromAccount);
+        logger.info("create transaction, transactionId={}", newTransaction.getId());
 
         reverseTransaction(newTransaction, toAccount);
 //        transactionRepository.save(newTransaction);
@@ -74,6 +79,8 @@ public class TransactionService {
         accountService.addIncomeTransaction(toAccount, reverseTransaction);
 
         accountRepository.save(toAccount);
+        logger.info("create reverse transaction, transactionId={}, for transaction transactionId={}",
+                reverseTransaction.getId(), transaction.getId());
     }
 
     @Transactional

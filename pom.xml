@@ -70,21 +70,22 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.15</version>
+			<version>1.6.13</version>
 		</dependency>
 
 		<!-- for open api generation -->
 		<dependency>
 			<groupId>org.openapitools</groupId>
 			<artifactId>jackson-databind-nullable</artifactId>
-			<version>0.2.6</version>
+			<version>0.2.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
+			<version>2.9.2</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -107,8 +108,8 @@
 						<configuration>
 							<generatorName>spring</generatorName>
 							<inputSpec>${project.basedir}/src/main/resources/openapi/rest-api.yaml</inputSpec>
-							<apiPackage>com.minibank.controllersRest</apiPackage>
-							<modelPackage>com.minibank.modelsVO</modelPackage>
+							<apiPackage>com.minibank.controllers.rest</apiPackage>
+							<modelPackage>com.minibank.vo</modelPackage>
 							<supportingFilesToGenerate>RestApi.java</supportingFilesToGenerate>
 							<generateSupportingFiles>true</generateSupportingFiles>
 							<generateApiTests>false</generateApiTests>

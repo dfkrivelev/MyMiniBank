@@ -37,7 +37,7 @@ public class LoginController {
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("user") User user) {
-        User newUser = userService.registration(user);
+        userService.registration(user);
        return "redirect:/auth/login";
     }
 }

@@ -1,4 +1,4 @@
-package com.minibank.modelsVO;
+package com.minibank.vo;
 
 import com.minibank.models.Account;
 import com.minibank.models.User;
@@ -6,7 +6,6 @@ import com.minibank.models.constants.Country;
 import com.minibank.models.constants.Status;
 import com.minibank.models.constants.UserRole;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;

@@ -42,19 +42,30 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"
+                  type: UserVO
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
   /admin/accountsList:
     get:
       summary: Method that displays a list of all accounts
       tags:
         - Admin
       operationId: getAllAccounts
+      parameters:
+        - name: page
+          in: query
+          description: Number page
+          required: false
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          description: Number of elements
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
       responses:
         '200':
           description: Successfully getting all accounts
@@ -63,19 +74,30 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Account"
+                  type: "AccountVO"
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
   /admin/transactionsList:
     get:
       summary: Method that displays a list of all transactions
       tags:
         - Admin
       operationId: getAllTransactions
+      parameters:
+        - name: page
+          in: query
+          description: Number page
+          required: false
+          schema:
+            type: integer
+        - name: per_page
+          in: query
+          description: Number of elements
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
       responses:
         '200':
           description: Successfully getting all transactions
@@ -84,13 +106,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Transaction"
+                  type: TransactionVO
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
   /admin/{user_id}:
     get:
       summary: Method that returns a user by id
@@ -98,10 +116,10 @@ paths:
         - Admin
       operationId: getUserById
       parameters:
-        - name: user_id
-          in: path
+        - in: path
+          name: user_id
           required: true
-          description: User Id
+          description: record id
           schema:
             type: integer
             format: int64
@@ -112,15 +130,9 @@ paths:
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
+                type: UserVO
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
   /admin/{account_id}:
     get:
       summary: Method that returns a account by id
@@ -128,10 +140,10 @@ paths:
         - Admin
       operationId: getAccountById
       parameters:
-        - name: account_id
-          in: path
+        - in: path
+          name: account_id
           required: true
-          description: Account Id
+          description: record id
           schema:
             type: integer
             format: int64
@@ -142,25 +154,19 @@ paths:
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Account"
+                type: AccountVO
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
     patch:
       summary: Update account status
       tags:
         - Admin
       operationId: updateStatusAcc
       parameters:
-        - name: account_id
-          in: path
+        - in: path
+          name: account_id
           required: true
-          description: Account Id
+          description: record id
           schema:
             type: integer
             format: int64
@@ -185,15 +191,9 @@ paths:
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Account"
+                type: AccountVO
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
   /admin/{transaction_id}:
     get:
       summary: Method that returns a transaction by id
@@ -201,10 +201,10 @@ paths:
         - Admin
       operationId: getTransactionById
       parameters:
-        - name: transaction_id
-          in: path
+        - in: path
+          name: transaction_id
           required: true
-          description: transaction Id
+          description: record id
           schema:
             type: integer
             format: int64
@@ -215,15 +215,9 @@ paths:
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Transaction"
+                type: TransactionVO
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
   /admin/createAccount:
     post:
       summary: Create new Account
@@ -233,27 +227,18 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          'application/json':
             schema:
-              $ref: "#/components/schemas/Account"
+              $ref: AccountVO
       responses:
         '200':
           description: Successfully created account
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Account"
+                type: AccountVO
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorBadRequest"
-
-
-
   /login/log:
     post:
       summary: Login
@@ -277,15 +262,9 @@ paths:
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
+                type: UserVO
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorBadRequest"
   /login/registration:
     post:
       summary: Registration
@@ -295,7 +274,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          'application/json':
             schema:
               type: object
               properties:
@@ -324,17 +303,9 @@ paths:
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
+                type: UserVO
         '400':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorBadRequest"
-
-
   /user/{user_id}:
     get:
       summary: Method that returns a account by id
@@ -372,13 +343,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Account"
+                  type: AccountVO
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
   /user/{account_id}:
     get:
       summary: Method that returns a transaction by account id
@@ -416,13 +383,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Transaction"
+                  type: TransactionVO
         '404':
           description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
     post:
       summary: Create Transaction
       tags:
@@ -439,7 +402,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          'application/json':
             schema:
               type: object
               properties:
@@ -464,180 +427,8 @@ paths:
           content:
             applications/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Transaction"
+                type: TransactionVO
         '404':
           description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorNotFound"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-components:
-  schemas:
-    User:
-      type: object
-      required:
-        - firstName
-        - lastName
-        - country
-        - phoneNumber
-        - email
-        - password
-        - role
-        - status
-      properties:
-        user_id:
-          type: integer
-          format: int64
-          example: 1
-        firstName:
-          type: string
-          example: User
-        lastName:
-          type: string
-          example: Userovicz
-        country:
-          type: string
-          example: POLAND
-        phoneNumber:
-          type: integer
-          format: int64
-          example: 485751354
-        email:
-          type: string
-          example: user@mail.com
-        dateTime:
-          type: string
-          format: 2023-05-15 18:23:27.800015+02
-        password:
-          type: string
-          example: user
-        role:
-          type: string
-          enum:
-            - ADMIN
-            - CLIENT
-          example: CLIENT
-        status:
-          type: string
-          enum:
-            - ACTIVE
-            - BLOCK
-            - DELETE
-        accounts:
-          type: array
-          items:
-            $ref: "#/components/schemas/Account"
-    Account:
-      type: object
-      required:
-        - accountNumber
-        - user_id
-      properties:
-        account_id:
-          type: integer
-          format: int64
-          example: 1
-        accountNumber:
-          type: integer
-          format: int64
-          example: 342231
-        user_id:
-          type: integer
-          format: int64
-          example: 2
-        dateTime:
-          type: string
-          format: 2023-05-15 18:23:27.800015+02
-        balance:
-          type: number
-          format: double
-          example: 341.05
-        status:
-          type: string
-          enum:
-            - ACTIVE
-            - BLOCK
-            - DELETE
-        transactions:
-          type: array
-          items:
-            $ref: "#/components/schemas/Transaction"
-    Transaction:
-      type: object
-      required:
-        - accountFrom
-        - accountTo
-        - amount
-        - description
-      properties:
-        transaction_id:
-          type: integer
-          format: int64
-          example: 34
-        accountFrom:
-          type: integer
-          format: int64
-          example: 2
-        accountTo:
-          type: integer
-          format: int64
-          example: 3
-        amount:
-          type: number
-          format: double
-          example: 123.00
-        dateTime:
-          type: string
-          format: 2023-05-15 18:23:27.800015+02
-        status:
-          type: string
-          enum:
-            - COMPLETED
-            - CANCELLED
-        typeTransfer:
-          type: string
-          enum:
-            - INCOME
-            - EXPENSE
-        description:
-          type: string
-          example: Ok
-    ErrorNotFound:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-        message:
-          type: string
-    ErrorBadRequest:
-      type: string
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-        message:
-          type: string

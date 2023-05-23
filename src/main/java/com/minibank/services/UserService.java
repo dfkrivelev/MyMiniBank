@@ -7,12 +7,13 @@ import com.minibank.models.constants.UserRole;
 import com.minibank.repositories.AccountRepository;
 import com.minibank.repositories.UserRepository;
 import com.minibank.security.SecurityUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserService {
 
+    private final static Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
@@ -37,47 +39,49 @@ public class UserService {
     }
 
 
-
     @Transactional
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User findById (Long userId) {
+    public User findById(Long userId) {
         return userRepository.findById(userId).get();
     }
 
     @Transactional
-    public User registration(User user) {
+    public void registration(User user) {
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getCountry(),
                 user.getPhoneNumber(), user.getEmail(), user.getPassword());
 
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         Account newAccount = createAuto(newUser);
         addUserAccounts(newUser, newAccount);
-        return userRepository.save(newUser);
+
+        userRepository.save(newUser);
+        logger.info("Created new user, userId={}", newUser.getId());
     }
 
     @Transactional
-    public Account createAuto (User user) {
+    public Account createAuto(User user) {
         Account newAccount;
         Long randomAccNumber;
-        do{
-            randomAccNumber = (long)(Math.random() * (99999999 - 10000000) + 10000000);
-        }while (uniqueNumber(randomAccNumber));
+        do {
+            randomAccNumber = (long) (Math.random() * (99999999 - 10000000) + 10000000);
+        } while (uniqueNumber(randomAccNumber));
 
         newAccount = new Account(randomAccNumber, user);
         newAccount.setBalance(0.0);
         newAccount.setDateTime(OffsetDateTime.now());
         newAccount.setStatus(Status.BLOCK);
 
+        logger.info("create new Account, for userEmail={} accountNumber={}",user.getEmail(), newAccount.getAccountNumber());
         return newAccount;
     }
 
     private boolean uniqueNumber(Long randomAccNumber) {
         List<Account> accounts = accountRepository.findAll();
-        for(Account account : accounts) {
-            if(account.getAccountNumber().equals(randomAccNumber)) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(randomAccNumber)) {
                 return true;
             }
         }
@@ -85,23 +89,27 @@ public class UserService {
     }
 
     @Transactional
-    public User createAdmin(User user) {
+    public void createAdmin(User user) {
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getCountry(),
                 user.getPhoneNumber(), user.getEmail(), user.getPassword());
 
         newUser.setRole(UserRole.ADMIN);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(newUser);
+
+        userRepository.save(newUser);
+        logger.info("create new admin, adminId={}", newUser.getId());
     }
 
     @Transactional
-    public User setPassword(User user, String oldPassword, String newPassword) {
+    public void setPassword(User user, String oldPassword, String newPassword) {
         if (passwordEncoder.matches(oldPassword, user.getPassword())) {
             user.setPassword(passwordEncoder.encode(newPassword));
         } else {
+            logger.warn("incorrect password for userId={}", user.getId());
             throw new IllegalArgumentException("incorrect password");
         }
-        return userRepository.save(user);
+        userRepository.save(user);
+        logger.info("Set password successful for userId={}", user.getId());
     }
 
     @Transactional
@@ -109,26 +117,31 @@ public class UserService {
         List<Account> accounts = user.getAccounts();
         accounts.add(account);
         user.setAccounts(accounts);
+        logger.info("added accountNumber={} for user userId={}", account.getAccountNumber(), user.getId());
     }
 
     @Transactional
     public void changeRole(User user, UserRole role) {
         user.setRole(role);
         userRepository.save(user);
+        logger.info("change role on userRole={} for userId={}", user.getRole(), user.getId());
     }
 
     @Transactional
     public void changeStatus(User user, Status status) {
         user.setStatus(status);
         userRepository.save(user);
+        logger.info("change status on userStatus={} for userId={}", user.getStatus(), user.getId());
     }
 
     public User getAuthUser() {
         User user = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(!(auth instanceof AnonymousAuthenticationToken)){
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
             SecurityUser securityUser = (SecurityUser) auth.getPrincipal();
             user = securityUser.getUser();
+
+            logger.info("authentication user, userId={}", user.getId());
         }
 
         return user;
@@ -137,15 +150,16 @@ public class UserService {
     public List<Account> findAllAccounts(User user) {
         return user.getAccounts();
     }
-    public Optional<User> findByEmail (String email) {
+
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public List<Account> getMyAccount(User user){
+    public List<Account> getMyAccount(User user) {
         List<Account> activeAccount = new ArrayList<>();
 
-        for(Account account : user.getAccounts()) {
-            if(!account.getStatus().equals(Status.DELETE)) {
+        for (Account account : user.getAccounts()) {
+            if (!account.getStatus().equals(Status.DELETE)) {
                 activeAccount.add(account);
             }
         }

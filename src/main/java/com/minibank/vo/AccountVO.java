@@ -1,11 +1,10 @@
-package com.minibank.modelsVO;
+package com.minibank.vo;
 
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.User;
 import com.minibank.models.constants.Status;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;

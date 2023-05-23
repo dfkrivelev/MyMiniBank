@@ -1,11 +1,10 @@
-package com.minibank.modelsVO;
+package com.minibank.vo;
 
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.constants.StatusTransaction;
 import com.minibank.models.constants.TypeTransfer;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 public class TransactionVO {
