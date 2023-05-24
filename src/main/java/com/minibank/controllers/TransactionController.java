@@ -41,15 +41,17 @@ public class TransactionController {
     }
 
     @PostMapping("/transfer/{id}")
-    public String transaction(@PathVariable("id") Long id, @ModelAttribute("transaction") Transaction transaction,
+    public String transaction(@PathVariable("id") Long id,
                               @RequestParam("accountNumberTo") Long accountNumberTo,
+                              @RequestParam("amount") Double amount,
+                              @RequestParam("description") String description,
                               Model model){
         User user = userService.getAuthUser();
         Account account = accountService.findById(id);
         List<Account> listAccount = user.getAccounts();
 
         model.addAttribute("account", account);
-        transactionService.transfer(transaction, account.getAccountNumber(), accountNumberTo);
+        transactionService.transfer(account.getAccountNumber(), accountNumberTo, amount, description);
         listAccount.replaceAll(s -> s.equals(account) ? s : accountService.findById(id));
         return "redirect:/account/myAccounts";
     }

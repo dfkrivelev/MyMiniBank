@@ -41,10 +41,10 @@ public class TransactionService {
     }
 
     @Transactional
-    public void transfer(Transaction transaction, Long fromAccountNumber, Long toAccountNumber) {
-        Transaction newTransaction = transaction;
+    public void transfer(Long fromAccountNumber, Long toAccountNumber, Double amount, String description) {
         Account fromAccount = accountService.findByAccountNumber(fromAccountNumber);
         Account toAccount = accountService.findByAccountNumber(toAccountNumber);
+        Transaction newTransaction = new Transaction(fromAccount, toAccount, amount, description);
 
         newTransaction.setAccountFrom(fromAccount);
         newTransaction.setAccountTo(toAccount);
@@ -69,6 +69,7 @@ public class TransactionService {
         Transaction reverseTransaction = new Transaction(transaction.getAccountFrom(), toAccount,
                 transaction.getAmount(), transaction.getDescription());
 
+        //TODO Посмотреть транзакции
         reverseTransaction.setDateTime(OffsetDateTime.now());
         reverseTransaction.setAmount(reverseTransaction.getAmount() * -1);
         reverseTransaction.setStatus(StatusTransaction.COMPLETED);

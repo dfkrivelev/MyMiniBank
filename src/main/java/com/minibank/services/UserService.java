@@ -49,20 +49,22 @@ public class UserService {
     }
 
     @Transactional
-    public void registration(User user) {
+    public User registration(User user) {
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getCountry(),
                 user.getPhoneNumber(), user.getEmail(), user.getPassword());
 
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        Account newAccount = createAuto(newUser);
+        Account newAccount = createAccountAuto(newUser);
         addUserAccounts(newUser, newAccount);
 
-        userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
+
         logger.info("Created new user, userId={}", newUser.getId());
+        return newUser;
     }
 
     @Transactional
-    public Account createAuto(User user) {
+    public Account createAccountAuto(User user) {
         Account newAccount;
         Long randomAccNumber;
         do {
@@ -74,7 +76,7 @@ public class UserService {
         newAccount.setDateTime(OffsetDateTime.now());
         newAccount.setStatus(Status.BLOCK);
 
-        logger.info("create new Account, for userEmail={} accountNumber={}",user.getEmail(), newAccount.getAccountNumber());
+        logger.info("create new Account, for userEmail={} accountNumber={}", user.getEmail(), newAccount.getAccountNumber());
         return newAccount;
     }
 
@@ -89,15 +91,17 @@ public class UserService {
     }
 
     @Transactional
-    public void createAdmin(User user) {
+    public User createAdmin(User user) {
         User newUser = new User(user.getFirstName(), user.getLastName(), user.getCountry(),
                 user.getPhoneNumber(), user.getEmail(), user.getPassword());
 
         newUser.setRole(UserRole.ADMIN);
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
         logger.info("create new admin, adminId={}", newUser.getId());
+
+        return newUser;
     }
 
     @Transactional
@@ -108,7 +112,7 @@ public class UserService {
             logger.warn("incorrect password for userId={}", user.getId());
             throw new IllegalArgumentException("incorrect password");
         }
-        userRepository.save(user);
+        user = userRepository.save(user);
         logger.info("Set password successful for userId={}", user.getId());
     }
 
@@ -121,17 +125,21 @@ public class UserService {
     }
 
     @Transactional
-    public void changeRole(User user, UserRole role) {
+    public User changeRole(User user, UserRole role) {
         user.setRole(role);
-        userRepository.save(user);
+        user = userRepository.save(user);
         logger.info("change role on userRole={} for userId={}", user.getRole(), user.getId());
+
+        return user;
     }
 
     @Transactional
-    public void changeStatus(User user, Status status) {
+    public User changeStatus(User user, Status status) {
         user.setStatus(status);
-        userRepository.save(user);
+        user = userRepository.save(user);
         logger.info("change status on userStatus={} for userId={}", user.getStatus(), user.getId());
+
+        return user;
     }
 
     public User getAuthUser() {

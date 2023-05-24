@@ -46,18 +46,23 @@ public class AccountService {
     }
 
     @Transactional
-    public void create(Account account, Long id) {
-        Account newAccount = new Account(account.getAccountNumber(), userRepository.getReferenceById(id));
+    public Account create(Long accountNumber, Long id) {
+        Account newAccount = new Account(accountNumber, userRepository.getReferenceById(id));
 
         userService.addUserAccounts(userRepository.getReferenceById(id), newAccount);
-        accountRepository.save(newAccount);
-        logger.info("create new Account, account={}",account.getId());
+        newAccount = accountRepository.save(newAccount);
+        logger.info("create new Account, account={}",newAccount.getId());
+
+        return newAccount;
     }
 
     @Transactional
-    public void changeStatus(Account account, Status status) {
+    public Account changeStatus(Account account, Status status) {
         account.setStatus(status);
-        accountRepository.save(account);
+        account = accountRepository.save(account);
+
+        logger.info("change status account, accountId={}", account.getId());
+        return account;
     }
 
 
@@ -73,12 +78,6 @@ public class AccountService {
         transactions = account.getTransactionsTo();
         transactions.add(transaction);
         account.setTransactionsTo(transactions);
-    }
-
-    @Transactional
-    public Account changeBalance(Account account, double amount) {
-        account.setBalance(amount);
-        return accountRepository.save(account);
     }
 
     public List<Transaction> allTransactions(Account account) {
