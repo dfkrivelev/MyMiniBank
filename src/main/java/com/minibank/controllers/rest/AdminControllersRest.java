@@ -4,13 +4,19 @@ import com.minibank.vo.AccountVO;
 import com.minibank.vo.InlineObject;
 import com.minibank.vo.TransactionVO;
 import com.minibank.vo.UserVO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@Tag(name = "Admin")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminControllersRest implements AdminApi{
+
     @Override
     public ResponseEntity<AccountVO> createAccount(AccountVO body) {
         return null;

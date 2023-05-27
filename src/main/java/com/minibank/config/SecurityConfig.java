@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             "/auth/registration", "/auth/success", "/account/create", "/account/ok", "/swagger-ui/**",
                             "/v2/**", "/v3/**").permitAll()
                     .antMatchers("/user/**").hasAnyAuthority("ADMIN", "CLIENT")
-                    .antMatchers("/admin/**").hasAuthority("ADMIN")
+                    .antMatchers("/admin/**", "/api/admin").hasAuthority("ADMIN")
                     .antMatchers("/account/myAccounts", "/trans/**").hasAuthority("CLIENT")
                     .antMatchers("/css/**", "/img/**", "/fonts/**", "/js/**", "/openapi/**").permitAll()
                     .anyRequest().hasAnyRole(UserRole.ADMIN.name(), UserRole.CLIENT.name())
