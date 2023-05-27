@@ -92,10 +92,18 @@
 			<version>3.0.0</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 		<dependency>
-			<groupId>io.swagger.core.v3</groupId>
-			<artifactId>swagger-annotations</artifactId>
-			<version>2.2.8</version>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.13.5</version>
 		</dependency>
 
 
@@ -131,6 +139,11 @@
 								<useTags>true</useTags>
 								<java8>false</java8>
 							</configOptions>
+							<importMappings>
+								<schemaMapping>UserVO=com.minibank.vo.UserVO</schemaMapping>
+								<schemaMapping>AccountVO=com.minibank.vo.AccountVO</schemaMapping>
+								<schemaMapping>TransactionVO=com.minibank.vo.TransactionVO</schemaMapping>
+							</importMappings>
 						</configuration>
 					</execution>
 				</executions>

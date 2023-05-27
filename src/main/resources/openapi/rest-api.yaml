@@ -38,11 +38,11 @@ paths:
         '200':
           description: Successfully getting all users
           content:
-            applications/json:
+            application/json:
               schema:
                 type: array
                 items:
-                  type: UserVO
+                  $ref: '#UserVO'
         '404':
           description: Not found
   /admin/accountsList:
@@ -70,11 +70,11 @@ paths:
         '200':
           description: Successfully getting all accounts
           content:
-            applications/json:
+            application/json:
               schema:
                 type: array
                 items:
-                  type: "AccountVO"
+                  $ref: '#AccountVO'
         '404':
           description: Not found
   /admin/transactionsList:
@@ -102,14 +102,14 @@ paths:
         '200':
           description: Successfully getting all transactions
           content:
-            applications/json:
+            application/json:
               schema:
                 type: array
                 items:
-                  type: TransactionVO
+                  $ref: '#TransactionVO'
         '404':
           description: Not found
-  /admin/{user_id}:
+  /api/admin/getUser/{user_id}:
     get:
       summary: Method that returns a user by id
       tags:
@@ -128,12 +128,12 @@ paths:
         '200':
           description: Successfully getting user
           content:
-            applications/json:
+            application/json:
               schema:
-                type: UserVO
+                $ref: '#UserVO'
         '404':
           description: Not found
-  /admin/{account_id}:
+  /api/admin/getAccount/{account_id}:
     get:
       summary: Method that returns a account by id
       tags:
@@ -152,9 +152,9 @@ paths:
         '200':
           description: Successfully getting account
           content:
-            applications/json:
+            application/json:
               schema:
-                type: AccountVO
+                $ref: '$AccountVO'
         '404':
           description: Not found
     patch:
@@ -189,12 +189,12 @@ paths:
         '200':
           description: Successfully updated account
           content:
-            applications/json:
+            application/json:
               schema:
-                type: AccountVO
+                $ref: '#AccountVO'
         '400':
           description: Bad request
-  /admin/{transaction_id}:
+  /api/admin/getTransaction/{transaction_id}:
     get:
       summary: Method that returns a transaction by id
       tags:
@@ -213,9 +213,9 @@ paths:
         '200':
           description: Successfully getting transaction
           content:
-            applications/json:
+            application/json:
               schema:
-                type: TransactionVO
+                $ref: '#TransactionVO'
         '404':
           description: Not found
   /admin/createAccount:
@@ -229,14 +229,14 @@ paths:
         content:
           'application/json':
             schema:
-              $ref: AccountVO
+              $ref: '#AccountVO'
       responses:
         '200':
           description: Successfully created account
           content:
-            applications/json:
+            application/json:
               schema:
-                type: AccountVO
+                $ref: '#AccountVO'
         '400':
           description: Bad request
   /login/log:
@@ -260,9 +260,9 @@ paths:
         '200':
           description: Successfully login
           content:
-            applications/json:
+            application/json:
               schema:
-                type: UserVO
+                $ref: '#UserVO'
         '400':
           description: Bad request
   /login/registration:
@@ -301,9 +301,9 @@ paths:
         '200':
           description: Successfully login
           content:
-            applications/json:
+            application/json:
               schema:
-                type: UserVO
+                $ref: '#UserVO'
         '400':
           description: Bad request
   /user/{user_id}:
@@ -339,11 +339,11 @@ paths:
         '200':
           description: Successfully getting account
           content:
-            applications/json:
+            application/json:
               schema:
                 type: array
                 items:
-                  type: AccountVO
+                  $ref: '#AccountVO'
         '404':
           description: Not found
   /user/{account_id}:
@@ -379,11 +379,11 @@ paths:
         '200':
           description: Successfully getting transaction
           content:
-            applications/json:
+            application/json:
               schema:
                 type: array
                 items:
-                  type: TransactionVO
+                  $ref: '#TransactionVO'
         '404':
           description: Not found
     post:
@@ -425,10 +425,14 @@ paths:
         '200':
           description: Successfully create transaction
           content:
-            applications/json:
+            application/json:
               schema:
-                type: TransactionVO
+                $ref: '#TransactionVO'
         '404':
           description: Bad request
 
-
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

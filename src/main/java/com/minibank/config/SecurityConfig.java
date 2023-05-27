@@ -37,9 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/", "/about", "/technology", "/contact", "/auth/login",
                             "/auth/registration", "/auth/success", "/account/create", "/account/ok", "/swagger-ui/**",
-                            "/v2/**", "/v3/**").permitAll()
+                            "/v2/**", "/v3/**", "/api/**").permitAll()
                     .antMatchers("/user/**").hasAnyAuthority("ADMIN", "CLIENT")
-                    .antMatchers("/admin/**", "/api/admin").hasAuthority("ADMIN")
+                    .antMatchers("/admin/**").hasAuthority("ADMIN")
                     .antMatchers("/account/myAccounts", "/trans/**").hasAuthority("CLIENT")
                     .antMatchers("/css/**", "/img/**", "/fonts/**", "/js/**", "/openapi/**").permitAll()
                     .anyRequest().hasAnyRole(UserRole.ADMIN.name(), UserRole.CLIENT.name())

@@ -5,6 +5,7 @@ import com.minibank.models.User;
 import com.minibank.models.constants.Country;
 import com.minibank.models.constants.Status;
 import com.minibank.models.constants.UserRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -13,16 +14,25 @@ import java.util.List;
 public class UserVO {
 
     private Long id;
+    @Schema(example = "1", description = "")
     private String firstName;
+    @Schema(example = "User", description = "")
     private String lastName;
+    @Schema(example = "Userovicz", description = "")
     private Country country;
+    @Schema(example = "42343", description = "")
     private Long phoneNumber;
+    @Schema(example = "2023-05-27T20:13:27.989Z", description = "")
     private OffsetDateTime dateTime;
+    @Schema(example = "mail@mail.com", description = "")
     private String email;
+    @Schema(example = "password", description = "")
     private String password;
+    @Schema(example = "CLIENT", description = "")
     private UserRole role;
+    @Schema(example = "ACTIVE", description = "")
     private Status status;
-    private List<Account> accounts = new ArrayList<>();
+
 
     public UserVO(Long id, String firstName, String lastName, Country country, Long phoneNumber, OffsetDateTime dateTime, String email, String password, UserRole role, Status status) {
         this.id = id;
@@ -37,12 +47,15 @@ public class UserVO {
         this.status = status;
     }
 
-    public UserVO valueOf(User user) {
+    public UserVO() {
+    }
+
+    public static UserVO valueOf(User user) {
         UserVO userVO = new UserVO(user.getId(), user.getFirstName(), user.getLastName(), user.getCountry(),
                 user.getPhoneNumber(), user.getDateTime(), user.getEmail(), user.getPassword(), user.getRole(),
                 user.getStatus());
 
-        userVO.setAccounts(user.getAccounts());
+//        userVO.setAccounts(user.getAccounts());
         return userVO;
     }
 
@@ -125,12 +138,5 @@ public class UserVO {
     public void setStatus(Status status) {
         this.status = status;
     }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
+    
 }
