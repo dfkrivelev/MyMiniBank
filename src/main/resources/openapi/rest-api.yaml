@@ -239,7 +239,7 @@ paths:
                 $ref: '#AccountVO'
         '400':
           description: Bad request
-  /login/log:
+  /api/login/log:
     post:
       summary: Login
       tags:
@@ -265,7 +265,7 @@ paths:
                 $ref: '#UserVO'
         '400':
           description: Bad request
-  /login/registration:
+  /api/login/registration:
     post:
       summary: Registration
       tags:

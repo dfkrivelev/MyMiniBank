@@ -14,7 +14,7 @@ public class TransactionVO {
     private Long id;
     @Schema(example = "1", description = "")
     @JsonBackReference
-    private AccountVO accountFromVO;  
+    private AccountVO accountFromVO;
     @Schema(example = "2", description = "")
     @JsonBackReference
     private AccountVO accountToVO;

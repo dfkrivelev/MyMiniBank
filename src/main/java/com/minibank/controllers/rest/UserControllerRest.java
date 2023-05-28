@@ -1,6 +1,7 @@
 package com.minibank.controllers.rest;
 
 import com.minibank.vo.AccountVO;
+import com.minibank.vo.InlineObject2;
 import com.minibank.vo.InlineObject3;
 import com.minibank.vo.TransactionVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
