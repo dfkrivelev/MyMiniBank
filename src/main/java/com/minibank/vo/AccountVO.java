@@ -1,10 +1,15 @@
 package com.minibank.vo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.User;
 import com.minibank.models.constants.Status;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,28 +17,42 @@ import java.util.List;
 public class AccountVO {
 
     private Long id;
+    @Schema(example = "8452325", description = "")
     private Long accountNumber;
-    private User user;
+    @Schema(example = "2", description = "")
+    @JsonBackReference
+    private UserVO userVO;
+    @Schema(example = "1523.00", description = "")
     private Double balance;
+    @Schema(example = "2023-05-27T20:13:27.989Z", description = "")
     private OffsetDateTime dateTime;
+    @Schema(example = "Active", description = "")
     private Status status;
-    private List<Transaction> transactionsFrom = new ArrayList<>();
-    private List<Transaction> transactionsTo = new ArrayList<>();
+
+//    @Schema(description = "List transactions", implementation = TransactionVO.class)
+//    @JsonManagedReference
+//    private List<TransactionVO> transactionsFrom = new ArrayList<>();
+//
+//    @Schema(description = "List transactions", implementation = TransactionVO.class)
+//    @JsonManagedReference
+//    private List<TransactionVO> transactionsTo = new ArrayList<>();
 
     public AccountVO(Long id, Long accountNumber, User user, Double balance, OffsetDateTime dateTime, Status status) {
         this.id = id;
         this.accountNumber = accountNumber;
-        this.user = user;
+        this.userVO = UserVO.valueOf(user);
         this.balance = balance;
         this.dateTime = dateTime;
         this.status = status;
     }
 
-    public AccountVO valueOf(Account account){
+    public AccountVO() {
+    }
+
+    public static AccountVO valueOf(Account account){
         AccountVO accountVO = new AccountVO(account.getId(), account.getAccountNumber(), account.getUser(), account.getBalance(),
                 account.getDateTime(), account.getStatus());
-        accountVO.setTransactionsFrom(account.getTransactionsFrom());
-        accountVO.setTransactionsTo(account.getTransactionsTo());
+
 
         return accountVO;
     }
@@ -54,12 +73,12 @@ public class AccountVO {
         this.accountNumber = accountNumber;
     }
 
-    public User getUser() {
-        return user;
+    public UserVO getUser() {
+        return userVO;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserVO user) {
+        this.userVO = user;
     }
 
     public Double getBalance() {
@@ -86,19 +105,19 @@ public class AccountVO {
         this.status = status;
     }
 
-    public List<Transaction> getTransactionsFrom() {
-        return transactionsFrom;
-    }
-
-    public void setTransactionsFrom(List<Transaction> transactionsFrom) {
-        this.transactionsFrom = transactionsFrom;
-    }
-
-    public List<Transaction> getTransactionsTo() {
-        return transactionsTo;
-    }
-
-    public void setTransactionsTo(List<Transaction> transactionsTo) {
-        this.transactionsTo = transactionsTo;
-    }
+//    public List<TransactionVO> getTransactionsFrom() {
+//        return transactionsFrom;
+//    }
+//
+//    public void setTransactionsFrom(List<TransactionVO> transactionsFrom) {
+//        this.transactionsFrom = transactionsFrom;
+//    }
+//
+//    public List<TransactionVO> getTransactionsTo() {
+//        return transactionsTo;
+//    }
+//
+//    public void setTransactionsTo(List<TransactionVO> transactionsTo) {
+//        this.transactionsTo = transactionsTo;
+//    }
 }

@@ -1,5 +1,9 @@
 package com.minibank.vo;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.minibank.models.Account;
 import com.minibank.models.User;
 import com.minibank.models.constants.Country;
@@ -10,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class UserVO {
 
@@ -32,6 +37,9 @@ public class UserVO {
     private UserRole role;
     @Schema(example = "ACTIVE", description = "")
     private Status status;
+    @Schema(description = "List accounts", implementation = AccountVO.class)
+    @JsonManagedReference
+    private List<AccountVO> accounts = new ArrayList<>();
 
 
     public UserVO(Long id, String firstName, String lastName, Country country, Long phoneNumber, OffsetDateTime dateTime, String email, String password, UserRole role, Status status) {
@@ -138,5 +146,12 @@ public class UserVO {
     public void setStatus(Status status) {
         this.status = status;
     }
-    
+
+    public List<AccountVO> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<AccountVO> accounts) {
+        this.accounts = accounts;
+    }
 }

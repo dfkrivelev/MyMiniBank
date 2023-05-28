@@ -1,5 +1,7 @@
 package com.minibank.controllers.rest;
 
+import com.minibank.models.Account;
+import com.minibank.models.Transaction;
 import com.minibank.models.User;
 import com.minibank.services.AccountService;
 import com.minibank.services.TransactionService;
@@ -37,8 +39,11 @@ public class AdminControllersRest implements AdminApi{
     }
 
     @Override
+    @ResponseBody
     public ResponseEntity<AccountVO> getAccountById(Long accountId) {
-        return null;
+        Account account = accountService.findById(accountId);
+        AccountVO result = AccountVO.valueOf(account);
+        return ResponseEntity.ok(result);
     }
 
     @Override
@@ -57,8 +62,11 @@ public class AdminControllersRest implements AdminApi{
     }
 
     @Override
+    @ResponseBody
     public ResponseEntity<TransactionVO> getTransactionById(Long transactionId) {
-        return null;
+        Transaction transaction = transactionService.findById(transactionId);
+        TransactionVO result = TransactionVO.valueOf(transaction);
+        return ResponseEntity.ok(result);
     }
 
     @Override
