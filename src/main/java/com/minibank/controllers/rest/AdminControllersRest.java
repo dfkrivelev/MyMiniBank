@@ -6,10 +6,7 @@ import com.minibank.models.User;
 import com.minibank.services.AccountService;
 import com.minibank.services.TransactionService;
 import com.minibank.services.UserService;
-import com.minibank.vo.AccountVO;
-import com.minibank.vo.InlineObject;
-import com.minibank.vo.TransactionVO;
-import com.minibank.vo.UserVO;
+import com.minibank.vo.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +31,10 @@ public class AdminControllersRest implements AdminApi{
     }
 
     @Override
-    public ResponseEntity<AccountVO> createAccount(AccountVO body) {
-        return null;
+    public ResponseEntity<AccountVO> createAccount(InlineObject1 inlineObject1) {
+        Account account = accountService.create(inlineObject1.getAccountNumber(), inlineObject1.getUserId());
+        AccountVO accountVO = AccountVO.valueOf(account);
+        return ResponseEntity.ok(accountVO);
     }
 
     @Override
@@ -48,17 +47,23 @@ public class AdminControllersRest implements AdminApi{
 
     @Override
     public ResponseEntity<List<AccountVO>> getAllAccounts(Integer page, Integer perPage) {
-        return null;
+        List<Account> allAccounts = accountService.findAll();
+        List<AccountVO> allAccountsVO = allAccounts.stream().map(AccountVO::valueOf).toList();
+        return ResponseEntity.ok(allAccountsVO);
     }
 
     @Override
     public ResponseEntity<List<TransactionVO>> getAllTransactions(Integer page, Integer perPage) {
-        return null;
+        List<Transaction> allTransaction = transactionService.findAll();
+        List<TransactionVO> allTransactionVO = allTransaction.stream().map(TransactionVO::valueOf).toList();
+        return ResponseEntity.ok(allTransactionVO);
     }
 
     @Override
     public ResponseEntity<List<UserVO>> getAllUsers(Integer page, Integer perPage) {
-        return null;
+        List<User> allUsers = userService.findAll();
+        List<UserVO> allUsersVO = allUsers.stream().map(UserVO::valueOf).toList();
+        return ResponseEntity.ok(allUsersVO);
     }
 
     @Override
@@ -79,7 +84,10 @@ public class AdminControllersRest implements AdminApi{
 
     @Override
     public ResponseEntity<AccountVO> updateStatusAcc(Long accountId, InlineObject inlineObject) {
-        return null;
+        Account account = accountService.findById(accountId);
+        accountService.changeStatus(account, inlineObject.getStatus());
+        AccountVO accountVO = AccountVO.valueOf(account);
+        return ResponseEntity.ok(accountVO);
     }
 
 

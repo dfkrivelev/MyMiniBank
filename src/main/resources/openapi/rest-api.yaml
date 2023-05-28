@@ -13,7 +13,7 @@ tags:
   - name: Admin
     description: Admin operations
 paths:
-  /admin/usersList:
+  /api/admin/usersList:
     get:
       summary: Method that displays a list of all users
       tags:
@@ -45,7 +45,7 @@ paths:
                   $ref: '#UserVO'
         '404':
           description: Not found
-  /admin/accountsList:
+  /api/admin/accountsList:
     get:
       summary: Method that displays a list of all accounts
       tags:
@@ -77,7 +77,7 @@ paths:
                   $ref: '#AccountVO'
         '404':
           description: Not found
-  /admin/transactionsList:
+  /api/admin/transactionsList:
     get:
       summary: Method that displays a list of all transactions
       tags:
@@ -218,7 +218,7 @@ paths:
                 $ref: '#TransactionVO'
         '404':
           description: Not found
-  /admin/createAccount:
+  /api/admin/createAccount:
     post:
       summary: Create new Account
       tags:
@@ -229,7 +229,16 @@ paths:
         content:
           'application/json':
             schema:
-              $ref: '#AccountVO'
+              type: object
+              properties:
+                accountNumber:
+                  type: integer
+                  format: int64
+                  example: 63878
+                userId:
+                  type: integer
+                  format: int64
+                  example: 5
       responses:
         '200':
           description: Successfully created account
@@ -306,7 +315,7 @@ paths:
                 $ref: '#UserVO'
         '400':
           description: Bad request
-  /user/{user_id}:
+  /api/user/{user_id}:
     get:
       summary: Method that returns a account by id
       tags:
@@ -346,7 +355,7 @@ paths:
                   $ref: '#AccountVO'
         '404':
           description: Not found
-  /user/{account_id}:
+  /api/user/{account_id}:
     get:
       summary: Method that returns a transaction by account id
       tags:
