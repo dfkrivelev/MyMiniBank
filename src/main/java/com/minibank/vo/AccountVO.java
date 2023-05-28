@@ -29,13 +29,13 @@ public class AccountVO {
     @Schema(example = "Active", description = "")
     private Status status;
 
-//    @Schema(description = "List transactions", implementation = TransactionVO.class)
-//    @JsonManagedReference
-//    private List<TransactionVO> transactionsFrom = new ArrayList<>();
-//
-//    @Schema(description = "List transactions", implementation = TransactionVO.class)
-//    @JsonManagedReference
-//    private List<TransactionVO> transactionsTo = new ArrayList<>();
+    @Schema(description = "List transactions", implementation = TransactionVO.class)
+    @JsonManagedReference
+    private List<TransactionVO> transactionsFrom = new ArrayList<>();
+
+    @Schema(description = "List transactions", implementation = TransactionVO.class)
+    @JsonManagedReference
+    private List<TransactionVO> transactionsTo = new ArrayList<>();
 
     public AccountVO(Long id, Long accountNumber, User user, Double balance, OffsetDateTime dateTime, Status status) {
         this.id = id;
@@ -105,19 +105,19 @@ public class AccountVO {
         this.status = status;
     }
 
-//    public List<TransactionVO> getTransactionsFrom() {
-//        return transactionsFrom;
-//    }
-//
-//    public void setTransactionsFrom(List<TransactionVO> transactionsFrom) {
-//        this.transactionsFrom = transactionsFrom;
-//    }
-//
-//    public List<TransactionVO> getTransactionsTo() {
-//        return transactionsTo;
-//    }
-//
-//    public void setTransactionsTo(List<TransactionVO> transactionsTo) {
-//        this.transactionsTo = transactionsTo;
-//    }
+    public List<TransactionVO> getTransactionsFrom() {
+        return transactionsFrom;
+    }
+
+    public void setTransactionsFrom(List<TransactionVO> transactionsFrom) {
+        this.transactionsFrom = transactionsFrom;
+    }
+
+    public List<TransactionVO> getTransactionsTo() {
+        return transactionsTo;
+    }
+
+    public void setTransactionsTo(List<TransactionVO> transactionsTo) {
+        this.transactionsTo = transactionsTo;
+    }
 }

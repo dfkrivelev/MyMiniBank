@@ -14,10 +14,10 @@ public class TransactionVO {
     private Long id;
     @Schema(example = "1", description = "")
     @JsonBackReference
-    private AccountVO accountFrom;
+    private AccountVO accountFromVO;  
     @Schema(example = "2", description = "")
     @JsonBackReference
-    private AccountVO accountTo;
+    private AccountVO accountToVO;
     @Schema(example = "2023-05-27T20:13:27.989Z", description = "")
     private OffsetDateTime dateTime;
     @Schema(example = "200.00", description = "")
@@ -31,8 +31,8 @@ public class TransactionVO {
 
     public TransactionVO(Long id, Account accountFrom, Account accountTo, OffsetDateTime dateTime, Double amount, StatusTransaction status, TypeTransfer typeTransfer, String description) {
         this.id = id;
-        this.accountFrom = AccountVO.valueOf(accountFrom);
-        this.accountTo = AccountVO.valueOf(accountTo);
+        this.accountFromVO = AccountVO.valueOf(accountFrom);
+        this.accountToVO = AccountVO.valueOf(accountTo);
         this.dateTime = dateTime;
         this.amount = amount;
         this.status = status;
@@ -44,10 +44,11 @@ public class TransactionVO {
     }
 
     public static TransactionVO valueOf(Transaction transaction){
-
-        return new TransactionVO(transaction.getId(), transaction.getAccountFrom(),
+        TransactionVO transactionVO = new TransactionVO(transaction.getId(), transaction.getAccountFrom(),
                 transaction.getAccountTo(), transaction.getDateTime(), transaction.getAmount(),
                 transaction.getStatus(), transaction.getTypeTransfer(), transaction.getDescription());
+
+        return transactionVO;
     }
 
     public Long getId() {
@@ -59,19 +60,19 @@ public class TransactionVO {
     }
 
     public AccountVO getAccountFrom() {
-        return accountFrom;
+        return accountFromVO;
     }
 
     public void setAccountFrom(AccountVO accountFrom) {
-        this.accountFrom = accountFrom;
+        this.accountFromVO = accountFrom;
     }
 
     public AccountVO getAccountTo() {
-        return accountTo;
+        return accountToVO;
     }
 
     public void setAccountTo(AccountVO accountTo) {
-        this.accountTo = accountTo;
+        this.accountToVO = accountTo;
     }
 
     public OffsetDateTime getDateTime() {
