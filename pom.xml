@@ -106,7 +106,12 @@
 			<version>2.13.5</version>
 		</dependency>
 
-
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -143,6 +148,7 @@
 								<schemaMapping>UserVO=com.minibank.vo.UserVO</schemaMapping>
 								<schemaMapping>AccountVO=com.minibank.vo.AccountVO</schemaMapping>
 								<schemaMapping>TransactionVO=com.minibank.vo.TransactionVO</schemaMapping>
+								<schemaMapping>AuthenticationRequestDTO=com.minibank.vo.AuthenticationRequestDTO</schemaMapping>
 							</importMappings>
 						</configuration>
 					</execution>

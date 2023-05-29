@@ -48,7 +48,7 @@ public class AdminControllersRest implements AdminApi{
     }
 
     @Override
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<AccountVO>> getAllAccounts(Integer page, Integer perPage) {
         List<Account> allAccounts = accountService.findAll();
         List<AccountVO> allAccountsVO = allAccounts.stream().map(AccountVO::valueOf).toList();
@@ -84,7 +84,6 @@ public class AdminControllersRest implements AdminApi{
         UserVO result = UserVO.valueOf(user);
         return ResponseEntity.ok(result);
     }
-
 
     @Override
     public ResponseEntity<AccountVO> updateStatusAcc(Long accountId, InlineObject inlineObject) {

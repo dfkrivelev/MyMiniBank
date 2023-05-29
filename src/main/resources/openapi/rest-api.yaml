@@ -13,10 +13,10 @@ tags:
   - name: Admin
     description: Admin operations
 paths:
-  /apiAdmin/usersList:
+  /api/restAdmin/usersList:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that displays a list of all users
       tags:
         - Admin
@@ -47,10 +47,10 @@ paths:
                   $ref: '#UserVO'
         '404':
           description: Not found
-  /apiAdmin/accountsList:
+  /api/restAdmin/accountsList:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that displays a list of all accounts
       tags:
         - Admin
@@ -81,10 +81,10 @@ paths:
                   $ref: '#AccountVO'
         '404':
           description: Not found
-  /apiAdmin/transactionsList:
+  /api/restAdmin/transactionsList:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that displays a list of all transactions
       tags:
         - Admin
@@ -115,10 +115,10 @@ paths:
                   $ref: '#TransactionVO'
         '404':
           description: Not found
-  /apiAdmin/getUser/{user_id}:
+  /api/restAdmin/getUser/{user_id}:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that returns a user by id
       tags:
         - Admin
@@ -141,10 +141,10 @@ paths:
                 $ref: '#UserVO'
         '404':
           description: Not found
-  /apiAdmin/getAccount/{account_id}:
+  /api/restAdmin/getAccount/{account_id}:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that returns a account by id
       tags:
         - Admin
@@ -169,7 +169,7 @@ paths:
           description: Not found
     patch:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Update account status
       tags:
         - Admin
@@ -206,10 +206,10 @@ paths:
                 $ref: '#AccountVO'
         '400':
           description: Bad request
-  /apiAdmin/getTransaction/{transaction_id}:
+  /api/restAdmin/getTransaction/{transaction_id}:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that returns a transaction by id
       tags:
         - Admin
@@ -232,10 +232,10 @@ paths:
                 $ref: '#TransactionVO'
         '404':
           description: Not found
-  /apiAdmin/createAccount:
+  /api/restAdmin/createAccount:
     post:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Create new Account
       tags:
         - Admin
@@ -264,7 +264,7 @@ paths:
                 $ref: '#AccountVO'
         '400':
           description: Bad request
-  /apiLogin/log:
+  /api/restLogin/log:
     post:
       summary: Login
       tags:
@@ -275,22 +275,19 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
+              $ref: '#AuthenticationRequestDTO'
       responses:
         '200':
           description: Successfully login
           content:
             application/json:
               schema:
-                $ref: '#UserVO'
+                type: object
+                additionalProperties:
+                  type: object
         '400':
           description: Bad request
-  /apiLogin/registration:
+  /api/restLogin/registration:
     post:
       summary: Registration
       tags:
@@ -331,10 +328,10 @@ paths:
                 $ref: '#UserVO'
         '400':
           description: Bad request
-  /apiUser/{user_id}:
+  /api/restUser/{user_id}:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that returns a account by id
       tags:
         - User
@@ -373,10 +370,10 @@ paths:
                   $ref: '#AccountVO'
         '404':
           description: Not found
-  /apiUser/{account_id}:
+  /api/restUser/{account_id}:
     get:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Method that returns a transaction by account id
       tags:
         - User
@@ -417,7 +414,7 @@ paths:
           description: Not found
     post:
       security:
-        - basicAuth: []
+        - bearerAuth: []
       summary: Create Transaction
       tags:
         - User
@@ -464,6 +461,7 @@ paths:
 
 components:
   securitySchemes:
-    basicAuth:
+    bearerAuth:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT

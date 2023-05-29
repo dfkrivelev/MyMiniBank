@@ -15,9 +15,10 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 @SecurityScheme(
-        name = "basicAuth",
+        name = "bearerAuth",
         type = SecuritySchemeType.HTTP,
-        scheme = "basic"
+        scheme = "bearer",
+        bearerFormat = "bearer"
 )
 public class SwaggerConfig {
 

@@ -12,7 +12,7 @@ import java.util.List;
 public class UserControllerRest implements UserApi{
 
     @Override
-    public ResponseEntity<TransactionVO> createTransaction(Long accountId, InlineObject4 inlineObject4) {
+    public ResponseEntity<TransactionVO> createTransaction(Long accountId, InlineObject3 inlineObject3) {
         return null;
     }
 
