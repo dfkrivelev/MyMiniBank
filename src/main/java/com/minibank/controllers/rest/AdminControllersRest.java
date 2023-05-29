@@ -1,5 +1,6 @@
 package com.minibank.controllers.rest;
 
+
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.User;
@@ -10,6 +11,7 @@ import com.minibank.vo.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,6 +48,7 @@ public class AdminControllersRest implements AdminApi{
     }
 
     @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<AccountVO>> getAllAccounts(Integer page, Integer perPage) {
         List<Account> allAccounts = accountService.findAll();
         List<AccountVO> allAccountsVO = allAccounts.stream().map(AccountVO::valueOf).toList();
@@ -81,6 +84,7 @@ public class AdminControllersRest implements AdminApi{
         UserVO result = UserVO.valueOf(user);
         return ResponseEntity.ok(result);
     }
+
 
     @Override
     public ResponseEntity<AccountVO> updateStatusAcc(Long accountId, InlineObject inlineObject) {

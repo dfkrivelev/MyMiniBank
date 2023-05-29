@@ -13,8 +13,10 @@ tags:
   - name: Admin
     description: Admin operations
 paths:
-  /api/admin/usersList:
+  /apiAdmin/usersList:
     get:
+      security:
+        - basicAuth: []
       summary: Method that displays a list of all users
       tags:
         - Admin
@@ -45,8 +47,10 @@ paths:
                   $ref: '#UserVO'
         '404':
           description: Not found
-  /api/admin/accountsList:
+  /apiAdmin/accountsList:
     get:
+      security:
+        - basicAuth: []
       summary: Method that displays a list of all accounts
       tags:
         - Admin
@@ -77,8 +81,10 @@ paths:
                   $ref: '#AccountVO'
         '404':
           description: Not found
-  /api/admin/transactionsList:
+  /apiAdmin/transactionsList:
     get:
+      security:
+        - basicAuth: []
       summary: Method that displays a list of all transactions
       tags:
         - Admin
@@ -109,8 +115,10 @@ paths:
                   $ref: '#TransactionVO'
         '404':
           description: Not found
-  /api/admin/getUser/{user_id}:
+  /apiAdmin/getUser/{user_id}:
     get:
+      security:
+        - basicAuth: []
       summary: Method that returns a user by id
       tags:
         - Admin
@@ -133,8 +141,10 @@ paths:
                 $ref: '#UserVO'
         '404':
           description: Not found
-  /api/admin/getAccount/{account_id}:
+  /apiAdmin/getAccount/{account_id}:
     get:
+      security:
+        - basicAuth: []
       summary: Method that returns a account by id
       tags:
         - Admin
@@ -158,6 +168,8 @@ paths:
         '404':
           description: Not found
     patch:
+      security:
+        - basicAuth: []
       summary: Update account status
       tags:
         - Admin
@@ -194,8 +206,10 @@ paths:
                 $ref: '#AccountVO'
         '400':
           description: Bad request
-  /api/admin/getTransaction/{transaction_id}:
+  /apiAdmin/getTransaction/{transaction_id}:
     get:
+      security:
+        - basicAuth: []
       summary: Method that returns a transaction by id
       tags:
         - Admin
@@ -218,8 +232,10 @@ paths:
                 $ref: '#TransactionVO'
         '404':
           description: Not found
-  /api/admin/createAccount:
+  /apiAdmin/createAccount:
     post:
+      security:
+        - basicAuth: []
       summary: Create new Account
       tags:
         - Admin
@@ -248,7 +264,7 @@ paths:
                 $ref: '#AccountVO'
         '400':
           description: Bad request
-  /api/login/log:
+  /apiLogin/log:
     post:
       summary: Login
       tags:
@@ -274,7 +290,7 @@ paths:
                 $ref: '#UserVO'
         '400':
           description: Bad request
-  /api/login/registration:
+  /apiLogin/registration:
     post:
       summary: Registration
       tags:
@@ -315,8 +331,10 @@ paths:
                 $ref: '#UserVO'
         '400':
           description: Bad request
-  /api/user/{user_id}:
+  /apiUser/{user_id}:
     get:
+      security:
+        - basicAuth: []
       summary: Method that returns a account by id
       tags:
         - User
@@ -355,8 +373,10 @@ paths:
                   $ref: '#AccountVO'
         '404':
           description: Not found
-  /api/user/{account_id}:
+  /apiUser/{account_id}:
     get:
+      security:
+        - basicAuth: []
       summary: Method that returns a transaction by account id
       tags:
         - User
@@ -396,6 +416,8 @@ paths:
         '404':
           description: Not found
     post:
+      security:
+        - basicAuth: []
       summary: Create Transaction
       tags:
         - User

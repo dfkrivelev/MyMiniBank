@@ -30,6 +30,7 @@ public class LoginControllerRest implements LoginApi{
         return null;
     }
 
+
     @Override
     public ResponseEntity<UserVO> registration(InlineObject3 inlineObject3) {
         User newUser = new User(inlineObject3.getFirstName(), inlineObject3.getLastName(), inlineObject3.getCountry(),

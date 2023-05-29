@@ -35,29 +35,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/", "/about", "/technology", "/contact", "/auth/login",
-                            "/auth/registration", "/auth/success", "/account/create", "/account/ok", "/swagger-ui/**",
-                            "/v2/**", "/v3/**", "/api/**").permitAll()
-                    .antMatchers("/user/**").hasAnyAuthority("ADMIN", "CLIENT")
-                    .antMatchers("/admin/**").hasAuthority("ADMIN")
-                    .antMatchers("/account/myAccounts", "/trans/**").hasAuthority("CLIENT")
-                    .antMatchers("/css/**", "/img/**", "/fonts/**", "/js/**", "/openapi/**").permitAll()
-                    .anyRequest().hasAnyRole(UserRole.ADMIN.name(), UserRole.CLIENT.name())
+                .antMatchers("/", "/about", "/technology", "/contact", "/auth/login",
+                        "/auth/registration", "/auth/success", "/account/create", "/account/ok", "/swagger-ui/**",
+                        "/v2/**", "/v3/**", "/apiLogin/**").permitAll()
+                .antMatchers("/user/**").hasAnyAuthority("ADMIN", "CLIENT")
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/account/myAccounts", "/trans/**").hasAuthority("CLIENT")
+                .antMatchers("/css/**", "/img/**", "/fonts/**", "/js/**", "/openapi/**").permitAll()
+                .anyRequest().hasAnyRole(UserRole.ADMIN.name(), UserRole.CLIENT.name())
                 .and()
-                    .formLogin()
-                    .loginPage("/auth/login")
-                    .loginProcessingUrl("/log")
-                    .permitAll()
-                    .defaultSuccessUrl("/user/home")
-                    .permitAll()
+                .formLogin()
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/log")
+                .permitAll()
+                .defaultSuccessUrl("/user/home")
+                .permitAll()
                 .and()
-                    .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
-                    .deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl("/auth/login")
-                    .permitAll();
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/auth/login")
+                .permitAll();
     }
 
 
