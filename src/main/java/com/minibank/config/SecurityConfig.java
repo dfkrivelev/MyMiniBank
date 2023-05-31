@@ -4,6 +4,7 @@ package com.minibank.config;
 import com.minibank.models.constants.Permission;
 import com.minibank.models.constants.UserRole;
 import com.minibank.security.JwtConfigure;
+import com.minibank.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -35,28 +37,35 @@ public class SecurityConfig {
     @Configuration
     @Order(1)
     public class ApiSecurityConfig extends WebSecurityConfigurerAdapter{
-        private final JwtConfigure jwtConfigure;
+        private final JwtTokenProvider jwtTokenProvider;;
 
-        public ApiSecurityConfig(JwtConfigure jwtConfigure) {
-            this.jwtConfigure = jwtConfigure;
+        public ApiSecurityConfig(JwtTokenProvider jwtTokenFilter) {
+            this.jwtTokenProvider = jwtTokenFilter;
         }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
+                    .httpBasic().disable()
                     .csrf().disable()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authorizeRequests()
                     .antMatchers("/swagger-ui/**",
-                            "/v2/**", "/v3/**", "/api/**").permitAll()
+                            "/v2/**", "/v3/**", "/api/restLogin/**").permitAll()
                     .antMatchers("/api/restAdmin/**").hasAuthority("ADMIN")
                     .antMatchers("/openapi/**").permitAll()
                     .anyRequest()
                     .authenticated()
                     .and()
-                    .apply(jwtConfigure);
+                    .apply(new JwtConfigure(jwtTokenProvider));
         }
+
+//        @Override
+//        public void configure(WebSecurity web) throws Exception {
+//            web.ignoring().antMatchers("/swagger-ui/**",
+//                    "/v2/**", "/v3/**");
+//        }
 
         @Bean
         @Override

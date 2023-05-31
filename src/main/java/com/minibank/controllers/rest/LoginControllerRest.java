@@ -42,12 +42,18 @@ public class LoginControllerRest implements LoginApi{
     @Override
     public ResponseEntity<Map<Object, Object>> login(@RequestBody AuthenticationRequestDTO body) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword()));
-            User user = userService.findByEmail(body.getEmail()).orElseThrow(() ->
-                    new UsernameNotFoundException("User doesn't exists"));
-            String token = jwtTokenProvider.createToken(body.getEmail(), user.getRole().name());
+            String username = body.getEmail();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, body.getPassword()));
+            User user = userService.findByEmail(username).get();
+
+            if(user == null) {
+                throw new UsernameNotFoundException("User with username: " + username + "not found");
+            }
+
+            String token = jwtTokenProvider.createToken(username, user.getRole());
+
             Map<Object, Object> response = new HashMap<>();
-            response.put("email", body.getEmail());
+            response.put("username", username);
             response.put("token", token);
 
             return ResponseEntity.ok(response);

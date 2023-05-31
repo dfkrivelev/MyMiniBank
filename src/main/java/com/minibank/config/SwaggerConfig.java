@@ -18,7 +18,7 @@ import springfox.documentation.spring.web.plugins.Docket;
         name = "bearerAuth",
         type = SecuritySchemeType.HTTP,
         scheme = "bearer",
-        bearerFormat = "bearer"
+        bearerFormat = "JWT"
 )
 public class SwaggerConfig {
 
@@ -49,4 +49,5 @@ public class SwaggerConfig {
                         .version("1.0.0")
                         .description("My Mini-Bank project API"));
     }
+
 }

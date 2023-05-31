@@ -2,7 +2,10 @@ package com.minibank.security;
 
 import com.minibank.exeption.JwtAuthenticationException;
 import com.minibank.models.constants.UserRole;
+import com.minibank.services.AccountService;
 import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,17 +24,17 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
+    private final static Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
+
     private final UserDetailsService userDetailsService;
 
     public JwtTokenProvider(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
-    @Value("${jwt.secret}")
+    @Value("${jwt.token.secret}")
     private String secretKey;
-    @Value("${jwt.header}")
-    private String authorizationHeader;
-    @Value("${jwt.expiration}")
+    @Value("${jwt.token.expired}")
     private long validityMilliseconds;
 
     @PostConstruct
@@ -39,11 +42,11 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String username, String role) {
+    public String createToken(String username, UserRole role) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityMilliseconds * 1000);
+        Date validity = new Date(now.getTime() + 3600000);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -56,14 +59,21 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
+            if(claimsJws.getBody().getExpiration().before(new Date())){
+                logger.warn("token is not valid");
+                return false;
+            }
+            logger.info("token is valid");
+            return true;
         }catch (JwtException | IllegalArgumentException e) {
             throw new JwtAuthenticationException("JWT token is expired or invalid", HttpStatus.UNAUTHORIZED);
         }
     }
 
     public Authentication getAuthentication(String token) {
+        logger.info("token ={}", token);
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+        logger.info("userDetails name ={}", userDetails.getUsername());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
@@ -72,6 +82,11 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader(authorizationHeader);
+        String bearerToken = request.getHeader("Authorization");
+        if(bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
+
 }

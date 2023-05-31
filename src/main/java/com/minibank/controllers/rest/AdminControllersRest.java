@@ -4,6 +4,7 @@ package com.minibank.controllers.rest;
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.User;
+import com.minibank.models.constants.UserRole;
 import com.minibank.services.AccountService;
 import com.minibank.services.TransactionService;
 import com.minibank.services.UserService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('ADMIN')")
 @Tag(name = "Admin")
 public class AdminControllersRest implements AdminApi{
 
@@ -63,6 +65,7 @@ public class AdminControllersRest implements AdminApi{
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserVO>> getAllUsers(Integer page, Integer perPage) {
         List<User> allUsers = userService.findAll();
         List<UserVO> allUsersVO = allUsers.stream().map(UserVO::valueOf).toList();
