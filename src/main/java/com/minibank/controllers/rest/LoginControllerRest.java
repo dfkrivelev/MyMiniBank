@@ -65,13 +65,6 @@ public class LoginControllerRest implements LoginApi{
     }
 
 
-    @PostMapping("/api/restLogin/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
-        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
-        securityContextLogoutHandler.logout(request, response, null);
-    }
-
-
     @Override
     public ResponseEntity<UserVO> registration(InlineObject2 inlineObject2) {
         User newUser = new User(inlineObject2.getFirstName(), inlineObject2.getLastName(), inlineObject2.getCountry(),

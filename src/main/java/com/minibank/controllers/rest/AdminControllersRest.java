@@ -65,7 +65,6 @@ public class AdminControllersRest implements AdminApi{
     }
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserVO>> getAllUsers(Integer page, Integer perPage) {
         List<User> allUsers = userService.findAll();
         List<UserVO> allUsersVO = allUsers.stream().map(UserVO::valueOf).toList();
