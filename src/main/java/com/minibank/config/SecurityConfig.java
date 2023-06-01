@@ -54,6 +54,7 @@ public class SecurityConfig {
                     .antMatchers("/swagger-ui/**",
                             "/v2/**", "/v3/**", "/api/restLogin/**").permitAll()
                     .antMatchers("/api/restAdmin/**").hasAuthority("ADMIN")
+                    .antMatchers("/api/restUser/**").hasAuthority("CLIENT")
                     .antMatchers("/openapi/**").permitAll()
                     .anyRequest()
                     .authenticated()
@@ -61,11 +62,6 @@ public class SecurityConfig {
                     .apply(new JwtConfigure(jwtTokenProvider));
         }
 
-//        @Override
-//        public void configure(WebSecurity web) throws Exception {
-//            web.ignoring().antMatchers("/swagger-ui/**",
-//                    "/v2/**", "/v3/**");
-//        }
 
         @Bean
         @Override
