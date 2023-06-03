@@ -5,6 +5,8 @@ import com.minibank.models.constants.Status;
 import com.minibank.models.constants.UserRole;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +20,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
+    @NotEmpty(message = "Please enter a first name")
     private String firstName;
     @Column(name = "last_name")
+    @NotEmpty(message = "Please enter a last name")
     private String lastName;
     @Column(name = "country")
+    @NotEmpty(message = "Please enter a country")
     @Enumerated(EnumType.STRING)
     private Country country;
     @Column(name = "phone_number")
+    @NotEmpty(message = "Please enter a phone number")
     private Long phoneNumber;
     @Column(name = "date_creation")
     private OffsetDateTime dateTime;
     @Column(name = "email")
+    @NotEmpty(message = "Please enter a email")
     private String email;
     @Column(name = "password")
+    @Size(min = 6)
+    @NotEmpty(message = "Please enter a password")
     private String password;
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
