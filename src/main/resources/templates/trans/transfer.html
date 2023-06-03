@@ -19,6 +19,8 @@
 <body>
 <div th:replace="fragments/nbForUser :: navbar('transfer')"></div>
 
+<br><br><br>
+
 <form th:method="post" th:action="@{/trans/transfer/{id}(id=${account.id})}" th:object="${transaction}">
     <div class="container">
         <div class="row">
@@ -61,6 +63,7 @@
     </div><!-- /.container -->
 </form>
 
+<br><br><br><br><br><br><br><br>
 
 <div th:replace="fragments/footer :: footer"></div>
 </body>

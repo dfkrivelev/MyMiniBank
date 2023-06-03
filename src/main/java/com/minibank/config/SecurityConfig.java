@@ -35,7 +35,7 @@ public class SecurityConfig {
     }
 
     @Configuration
-    @Order(1)
+    @Order(2)
     public class ApiSecurityConfig extends WebSecurityConfigurerAdapter{
         private final JwtTokenProvider jwtTokenProvider;;
 
@@ -71,7 +71,7 @@ public class SecurityConfig {
     }
 
     @Configuration
-    @Order(2)
+    @Order(1)
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         private final UserDetailsService userDetailsService;

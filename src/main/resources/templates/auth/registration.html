@@ -19,6 +19,7 @@
 <body>
 
 <div th:replace="fragments/navbar :: navbar('registration')"></div>
+<br><br>
 
 <form th:method="post" th:action="@{/auth/registration}" th:object="${user}">
 <div class="container">
@@ -99,6 +100,8 @@
     </div><!-- /.row -->
 </div><!-- /.container -->
 </form>
+
+<br><br>
 
 <div th:replace="fragments/footer :: footer"></div>
 
