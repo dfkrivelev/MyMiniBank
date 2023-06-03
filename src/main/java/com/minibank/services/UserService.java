@@ -174,4 +174,11 @@ public class UserService {
         }
         return activeAccount;
     }
+
+    public SecurityUser getAuthUser (Authentication authentication) {
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+
+        return securityUser;
+    }
 }
