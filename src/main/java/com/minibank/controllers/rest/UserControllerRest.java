@@ -47,6 +47,12 @@ public class UserControllerRest implements UserApi{
         if(securityUser.getUser().getAccounts().stream().anyMatch(acc -> acc.getAccountNumber().equals(account.getAccountNumber()))){
             transactionService.transfer(account.getAccountNumber(), inlineObject3.getAccountTo(), inlineObject3.getAmount(),
                     inlineObject3.getDescription());
+            if(inlineObject3.getAccountFrom().equals(inlineObject3.getAccountTo())){
+                List<Transaction> incomeTransaction = accountService.incomeTransactions(account);
+                incomeTransaction.sort(new ComparatorDate());
+
+                return ResponseEntity.ok(TransactionVO.valueOf(incomeTransaction.get(incomeTransaction.size() - 1)));
+            }
 
             List<Transaction> expenseTransfer = accountService.expenseTransactions(account);
             expenseTransfer.sort(new ComparatorDate());

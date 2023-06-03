@@ -46,6 +46,17 @@ public class TransactionService {
         Account toAccount = accountService.findByAccountNumber(toAccountNumber);
         Transaction newTransaction = new Transaction(fromAccount, toAccount, amount, description);
 
+        if(fromAccount.equals(toAccount)){
+            fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
+            newTransaction.setStatus(StatusTransaction.COMPLETED);
+            newTransaction.setDateTime(OffsetDateTime.now());
+            newTransaction.setTypeTransfer(TypeTransfer.INCOME);
+            newTransaction.setDescription("Replenishment of the balance");
+            accountService.addIncomeTransaction(fromAccount, newTransaction);
+            accountRepository.save(fromAccount);
+            return;
+        }
+
         newTransaction.setAccountFrom(fromAccount);
         newTransaction.setAccountTo(toAccount);
         newTransaction.setDateTime(OffsetDateTime.now());
