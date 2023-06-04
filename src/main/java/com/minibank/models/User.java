@@ -6,6 +6,7 @@ import com.minibank.models.constants.UserRole;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -26,11 +27,11 @@ public class User {
     @NotEmpty(message = "Please enter a last name")
     private String lastName;
     @Column(name = "country")
-    @NotEmpty(message = "Please enter a country")
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Please enter a country")
     private Country country;
     @Column(name = "phone_number")
-    @NotEmpty(message = "Please enter a phone number")
+    @NotNull(message = "Please enter a phone number")
     private Long phoneNumber;
     @Column(name = "date_creation")
     private OffsetDateTime dateTime;
