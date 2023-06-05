@@ -20,5 +20,4 @@ public class JwtConfigure extends SecurityConfigurerAdapter<DefaultSecurityFilte
         JwtTokenFilter jwtTokenFilter = new JwtTokenFilter(jwtTokenProvider);
         httpSecurity.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
 }

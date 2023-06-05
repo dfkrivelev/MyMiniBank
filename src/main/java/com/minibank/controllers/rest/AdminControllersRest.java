@@ -4,7 +4,6 @@ package com.minibank.controllers.rest;
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.User;
-import com.minibank.models.constants.UserRole;
 import com.minibank.services.AccountService;
 import com.minibank.services.TransactionService;
 import com.minibank.services.UserService;
@@ -21,7 +20,7 @@ import java.util.List;
 @RestController
 @PreAuthorize("hasAuthority('ADMIN')")
 @Tag(name = "Admin")
-public class AdminControllersRest implements AdminApi{
+public class AdminControllersRest implements AdminApi {
 
     private final UserService userService;
     private final AccountService accountService;
@@ -94,6 +93,4 @@ public class AdminControllersRest implements AdminApi{
         AccountVO accountVO = AccountVO.valueOf(account);
         return ResponseEntity.ok(accountVO);
     }
-
-
 }

@@ -51,7 +51,7 @@ public class AccountService {
 
         userService.addUserAccounts(userRepository.getReferenceById(id), newAccount);
         newAccount = accountRepository.save(newAccount);
-        logger.info("create new Account, account={}",newAccount.getId());
+        logger.info("create new Account, account={}", newAccount.getId());
 
         return newAccount;
     }

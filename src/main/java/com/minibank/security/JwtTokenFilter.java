@@ -1,14 +1,9 @@
 package com.minibank.security;
 
-import antlr.StringUtils;
-import com.minibank.exeption.JwtAuthenticationException;
-import com.minibank.security.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -17,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
@@ -37,7 +31,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
-            logger.info("authentication name={}",authentication.getName());
+            logger.info("authentication name={}", authentication.getName());
 
             if (authentication != null) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -47,6 +41,4 @@ public class JwtTokenFilter extends GenericFilterBean {
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
-
 }
-

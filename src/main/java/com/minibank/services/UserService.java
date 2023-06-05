@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,6 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
     }
-
 
     @Transactional
     public List<User> findAll() {
@@ -175,7 +173,7 @@ public class UserService {
         return activeAccount;
     }
 
-    public SecurityUser getAuthUser (Authentication authentication) {
+    public SecurityUser getAuthUser(Authentication authentication) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 

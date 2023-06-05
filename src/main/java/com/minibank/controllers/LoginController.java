@@ -18,7 +18,7 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String loginPage(Model model){
+    public String loginPage(Model model) {
         User user = userService.getAuthUser();
 
         model.addAttribute("user", user);
@@ -31,13 +31,13 @@ public class LoginController {
     }
 
     @GetMapping("/registration")
-    public String registrationPage (@ModelAttribute("user") User user) {
+    public String registrationPage(@ModelAttribute("user") User user) {
         return "auth/registration";
     }
 
     @PostMapping("/registration")
     public String registration(@ModelAttribute("user") User user) {
         userService.registration(user);
-       return "redirect:/auth/login";
+        return "redirect:/auth/login";
     }
 }

@@ -46,7 +46,7 @@ public class TransactionService {
         Account toAccount = accountService.findByAccountNumber(toAccountNumber);
         Transaction newTransaction = new Transaction(fromAccount, toAccount, amount, description);
 
-        if(fromAccount.equals(toAccount)){
+        if (fromAccount.equals(toAccount)) {
             fromAccount.setBalance(fromAccount.getBalance() + newTransaction.getAmount());
             newTransaction.setStatus(StatusTransaction.COMPLETED);
             newTransaction.setDateTime(OffsetDateTime.now());
@@ -72,7 +72,6 @@ public class TransactionService {
         logger.info("create transaction, transactionId={}", newTransaction.getId());
 
         reverseTransaction(newTransaction, toAccount);
-//        transactionRepository.save(newTransaction);
     }
 
     @Transactional
@@ -80,7 +79,6 @@ public class TransactionService {
         Transaction reverseTransaction = new Transaction(transaction.getAccountFrom(), toAccount,
                 transaction.getAmount(), transaction.getDescription());
 
-        //TODO Посмотреть транзакции
         reverseTransaction.setDateTime(OffsetDateTime.now());
         reverseTransaction.setAmount(reverseTransaction.getAmount() * -1);
         reverseTransaction.setStatus(StatusTransaction.COMPLETED);

@@ -1,7 +1,6 @@
 package com.minibank.config;
 
 
-import com.minibank.models.constants.Permission;
 import com.minibank.models.constants.UserRole;
 import com.minibank.security.JwtConfigure;
 import com.minibank.security.JwtTokenProvider;
@@ -11,11 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -36,8 +33,8 @@ public class SecurityConfig {
 
     @Configuration
     @Order(2)
-    public class ApiSecurityConfig extends WebSecurityConfigurerAdapter{
-        private final JwtTokenProvider jwtTokenProvider;;
+    public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
+        private final JwtTokenProvider jwtTokenProvider;
 
         public ApiSecurityConfig(JwtTokenProvider jwtTokenFilter) {
             this.jwtTokenProvider = jwtTokenFilter;
@@ -61,7 +58,6 @@ public class SecurityConfig {
                     .and()
                     .apply(new JwtConfigure(jwtTokenProvider));
         }
-
 
         @Bean
         @Override

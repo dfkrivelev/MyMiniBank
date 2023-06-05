@@ -43,7 +43,7 @@ public class TransactionVO {
     public TransactionVO() {
     }
 
-    public static TransactionVO valueOf(Transaction transaction){
+    public static TransactionVO valueOf(Transaction transaction) {
         TransactionVO transactionVO = new TransactionVO(transaction.getId(), transaction.getAccountFrom(),
                 transaction.getAccountTo(), transaction.getDateTime(), transaction.getAmount(),
                 transaction.getStatus(), transaction.getTypeTransfer(), transaction.getDescription());

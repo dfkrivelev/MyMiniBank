@@ -49,5 +49,4 @@ public class SwaggerConfig {
                         .version("1.0.0")
                         .description("My Mini-Bank project API"));
     }
-
 }

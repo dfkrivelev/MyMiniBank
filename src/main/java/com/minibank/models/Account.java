@@ -3,7 +3,6 @@ package com.minibank.models;
 import com.minibank.models.constants.Status;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;

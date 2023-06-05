@@ -2,24 +2,22 @@ package com.minibank.controllers.rest;
 
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
-import com.minibank.models.User;
 import com.minibank.models.comparator.ComparatorDate;
 import com.minibank.security.SecurityUser;
 import com.minibank.services.AccountService;
 import com.minibank.services.TransactionService;
 import com.minibank.services.UserService;
-import com.minibank.vo.*;
+import com.minibank.vo.AccountVO;
+import com.minibank.vo.InlineObject3;
+import com.minibank.vo.TransactionVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 
 @RestController

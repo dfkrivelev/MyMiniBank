@@ -3,13 +3,10 @@ package com.minibank.vo;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.minibank.models.Account;
-import com.minibank.models.Transaction;
 import com.minibank.models.User;
 import com.minibank.models.constants.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +46,9 @@ public class AccountVO {
     public AccountVO() {
     }
 
-    public static AccountVO valueOf(Account account){
+    public static AccountVO valueOf(Account account) {
         AccountVO accountVO = new AccountVO(account.getId(), account.getAccountNumber(), account.getUser(), account.getBalance(),
                 account.getDateTime(), account.getStatus());
-
 
         return accountVO;
     }

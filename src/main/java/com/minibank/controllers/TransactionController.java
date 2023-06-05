@@ -3,7 +3,6 @@ package com.minibank.controllers;
 import com.minibank.models.Account;
 import com.minibank.models.Transaction;
 import com.minibank.models.User;
-import com.minibank.repositories.AccountRepository;
 import com.minibank.services.AccountService;
 import com.minibank.services.TransactionService;
 import com.minibank.services.UserService;
@@ -30,8 +29,8 @@ public class TransactionController {
     }
 
     @GetMapping("/transfer/{id}")
-    public String transactionPage(@ModelAttribute("transaction")Transaction transaction, @PathVariable("id") Long id,
-                                  Model model){
+    public String transactionPage(@ModelAttribute("transaction") Transaction transaction, @PathVariable("id") Long id,
+                                  Model model) {
         User user = userService.getAuthUser();
         Account account = accountService.findById(id);
 
@@ -45,7 +44,7 @@ public class TransactionController {
                               @RequestParam("accountNumberTo") Long accountNumberTo,
                               @RequestParam("amount") Double amount,
                               @RequestParam("description") String description,
-                              Model model){
+                              Model model) {
         User user = userService.getAuthUser();
         Account account = accountService.findById(id);
         List<Account> listAccount = user.getAccounts();
@@ -58,7 +57,7 @@ public class TransactionController {
 
     @GetMapping("/myTransfers/{id}")
     public String myTransfersPage(@PathVariable("id") Long id,
-                                  Model model){
+                                  Model model) {
         User user = userService.getAuthUser();
         Account account = accountService.findById(id);
 

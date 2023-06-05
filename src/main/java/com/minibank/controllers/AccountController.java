@@ -18,7 +18,6 @@ public class AccountController {
     private final AccountService accountService;
     private final UserService userService;
 
-
     @Autowired
     public AccountController(AccountService accountService, UserService userService) {
         this.accountService = accountService;

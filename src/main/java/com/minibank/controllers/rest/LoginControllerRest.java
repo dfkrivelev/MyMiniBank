@@ -4,7 +4,9 @@ package com.minibank.controllers.rest;
 import com.minibank.models.User;
 import com.minibank.security.JwtTokenProvider;
 import com.minibank.services.UserService;
-import com.minibank.vo.*;
+import com.minibank.vo.AuthenticationRequestDTO;
+import com.minibank.vo.InlineObject2;
+import com.minibank.vo.UserVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,19 +15,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @Tag(name = "Login")
-public class LoginControllerRest implements LoginApi{
+public class LoginControllerRest implements LoginApi {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
@@ -38,7 +36,6 @@ public class LoginControllerRest implements LoginApi{
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-
     @Override
     public ResponseEntity<Map<Object, Object>> login(@RequestBody AuthenticationRequestDTO body) {
         try {
@@ -46,7 +43,7 @@ public class LoginControllerRest implements LoginApi{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, body.getPassword()));
             User user = userService.findByEmail(username).get();
 
-            if(user == null) {
+            if (user == null) {
                 throw new UsernameNotFoundException("User with username: " + username + "not found");
             }
 
@@ -57,13 +54,12 @@ public class LoginControllerRest implements LoginApi{
             response.put("token", token);
 
             return ResponseEntity.ok(response);
-        }catch (AuthenticationException e){
+        } catch (AuthenticationException e) {
             Map<Object, Object> exception = new HashMap<>();
             exception.put("Invalid email", "or Invalid password");
             return new ResponseEntity<>(exception, HttpStatus.FORBIDDEN);
         }
     }
-
 
     @Override
     public ResponseEntity<UserVO> registration(InlineObject2 inlineObject2) {

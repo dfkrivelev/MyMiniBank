@@ -46,5 +46,4 @@ public class StartController {
         model.addAttribute("user", user);
         return "main/contact";
     }
-
 }
